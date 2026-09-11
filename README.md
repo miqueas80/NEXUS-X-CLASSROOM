@@ -147,3 +147,4 @@ La aplicación pasa a usar arquitectura **single-origin**:
 Para producción se publica **una sola URL de Red Nexus Classroom**. La infraestructura (Node, HTTPS, base de datos, TURN, etc.) queda detrás de esa URL y no forma parte de la configuración del docente.
 
 \n## v1.6 — Permisos y PWA\n\nIncluye centro de permisos dentro de la aplicación: notificaciones, cámara, micrófono, portapapeles e instalación PWA. Los permisos no se solicitan todos al iniciar; se solicitan bajo acción del usuario. Se agregan iconos PWA y manejo de clic en notificaciones.\n
+\n## v1.7 — Corrección de bloqueo de interfaz\n\nSe corrigió un error de JavaScript introducido al ocultar la configuración de API: quedaba un listener apuntando a un campo eliminado (`aApi`), provocando una excepción durante el arranque y dejando todos los botones inactivos. También se ajustaron la navegación de Configuración y las rutas PWA relativas.\n
