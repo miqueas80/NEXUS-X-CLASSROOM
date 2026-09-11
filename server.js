@@ -252,6 +252,11 @@ wss.on("connection",ws=>{
     }
     if(!userId)return;
     if(m.type==="join_class"){const c=cls(m.classId);if(c?.members.includes(userId))ws.send(JSON.stringify({type:"presence",members:members(c)}));return;}
+    if(m.type==="network_ready"){
+      const c=cls(m.classId),owner=db.users.find(x=>x.id===userId);
+      if(c&&owner&&teacher(owner,c))broadcastClass(c.id,{type:"network_ready",classId:c.id},userId);
+      return;
+    }
     if(m.type==="signal"){const target=sockets.get(m.to);if(target?.readyState===1)target.send(JSON.stringify({type:"signal",from:userId,data:m.data}));return;}
     if(m.type==="chat"){
       const c=cls(m.classId);if(!c?.members.includes(userId))return;

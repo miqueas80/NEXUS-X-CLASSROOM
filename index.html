@@ -8,7 +8,7 @@
 :root{--bg:#070b13;--side:#0a111d;--panel:#101a2b;--panel2:#0c1524;--line:#263753;--text:#edf4ff;--muted:#8fa1bd;--a:#67e8f9;--ok:#58e38b;--warn:#ffd166;--bad:#ff7180}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 30% -10%,#182a47 0,#070b13 46%);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif}button,input,textarea,select{font:inherit}button{border:1px solid var(--line);background:#16243b;color:var(--text);padding:10px 13px;border-radius:10px;cursor:pointer}button:hover:not(:disabled){filter:brightness(1.12)}button:disabled{opacity:.45;cursor:not-allowed}.primary{background:#126d88;border-color:#3bd0ec}.danger{background:#29151b;border-color:#66333e}.ghost{background:transparent}.row{display:flex;gap:8px}.row>*{flex:1}
 #auth{min-height:100vh;display:grid;place-items:center;padding:18px}.authbox{width:min(460px,100%);padding:25px;background:linear-gradient(180deg,#101b2d,#0b1321);border:1px solid var(--line);border-radius:18px;box-shadow:0 25px 90px #0008}.logo{font-weight:950;letter-spacing:.15em}.logo small{display:block;color:var(--muted);font-size:9px;letter-spacing:.2em;margin-top:4px}.form{display:grid;gap:9px}.form input,.form textarea,.form select{width:100%;padding:11px;background:#080e19;border:1px solid var(--line);border-radius:10px;color:var(--text)}.form textarea{min-height:110px}.muted{color:var(--muted)}
-.app{min-height:100vh;display:grid;grid-template-columns:250px 1fr}.sidebar{background:#09101b;border-right:1px solid var(--line);padding:17px 12px;display:flex;flex-direction:column}.nav{display:grid;gap:4px;margin-top:22px}.nav button{text-align:left;border:0;background:transparent;color:var(--muted)}.nav button.active{color:var(--a);background:#102238}.classlist{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}.classitem{padding:10px;border:1px solid var(--line);background:#0c1625;border-radius:10px;margin-top:6px;cursor:pointer}.classitem b{font-size:11px}.classitem small{display:block;font-size:9px;color:var(--muted);margin-top:3px}.me{margin-top:auto;border-top:1px solid var(--line);padding-top:12px;font-size:11px}.main{min-width:0}.top{height:65px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 22px}.top small{color:var(--muted)}.content{max-width:1250px;margin:auto;padding:22px}.page{display:none}.page.active{display:block}.hero{display:flex;justify-content:space-between;gap:12px;margin-bottom:18px}.hero h1{margin:0 0 5px;font-size:27px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}.stat,.panel{background:linear-gradient(180deg,#101a2b,#0c1422);border:1px solid var(--line);border-radius:15px}.stat{padding:15px}.stat b{display:block;font-size:28px}.stat span{font-size:9px;letter-spacing:.13em;color:var(--muted)}.grid2{display:grid;grid-template-columns:1.35fr 1fr;gap:13px;margin-top:13px}.panel{padding:16px}.panel h3{font-size:12px;letter-spacing:.1em;margin:0 0 12px}.post{border-top:1px solid var(--line);padding:12px 0}.post:first-child{border-top:0}.post b{font-size:12px}.post p{font-size:13px;line-height:1.5;white-space:pre-wrap;margin:6px 0}.code{font-size:30px;font-weight:950;letter-spacing:.18em;text-align:center;border:1px dashed #4b678f;border-radius:12px;padding:14px;background:#080f1b}.tag{font-size:9px;padding:5px 7px;border-radius:999px;background:#133021;color:var(--ok);height:max-content}.activity{border:1px solid var(--line);border-radius:13px;padding:14px;background:#0a1220;margin-bottom:10px}.activityhead{display:flex;justify-content:space-between;gap:12px}.activity h3{margin:0;font-size:15px}.activity p{font-size:12px;color:#bac7d9;white-space:pre-wrap;line-height:1.5}.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}.person{border:1px solid var(--line);border-radius:12px;padding:13px;background:#0a1220}.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#17314a;margin-bottom:8px}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}.table{width:100%;border-collapse:collapse;font-size:11px}.table th,.table td{padding:10px;border-bottom:1px solid var(--line);text-align:left}.table th{color:var(--muted);font-size:9px;letter-spacing:.08em}.calendar{display:grid;gap:8px}.event{border-left:3px solid var(--a);padding:10px;background:#0a1220;border-radius:8px}.event b{font-size:12px}.event small{display:block;color:var(--muted);margin-top:4px}.network{height:470px;position:relative;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:radial-gradient(circle,#14233b,#08101c 67%)}.network svg{position:absolute;width:100%;height:100%}.node{position:absolute;transform:translate(-50%,-50%);width:95px;text-align:center}.node i{font-style:normal;width:50px;height:50px;margin:auto;display:grid;place-items:center;border-radius:50%;background:#142a45;border:1px solid #4a6a90}.node.main i{border-color:var(--a);box-shadow:0 0 25px #4adcf455}.node span{display:block;font-size:9px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chat{height:450px;display:flex;flex-direction:column}.chatlog{flex:1;overflow:auto}.msg{margin:7px 0}.msg b{font-size:10px;color:var(--a)}.msg span{display:block;background:#0a1321;padding:8px;border-radius:9px;font-size:12px}.chatrow{display:flex;gap:7px;margin-top:8px}.chatrow input{flex:1;background:#080e19;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px}.empty{text-align:center;color:var(--muted);padding:55px 15px;border:1px dashed var(--line);border-radius:13px}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#14233a;border:1px solid var(--line);padding:10px 14px;border-radius:10px;display:none;z-index:30}.toast.show{display:block}.modal{position:fixed;inset:0;background:#000b;display:none;place-items:center;padding:15px;z-index:20}.modal.show{display:grid}.modalbox{width:min(540px,100%);background:#0d1727;border:1px solid var(--line);border-radius:16px;padding:18px}.modalbox h2{margin-top:0}.notice{padding:10px 12px;border-radius:10px;background:#0d1d2d;border:1px solid var(--line);font-size:11px;margin-bottom:9px}.progress{height:8px;background:#070c14;border-radius:99px;overflow:hidden;margin-top:8px}.bar{height:100%;width:0;background:var(--a)}.hide{display:none!important}
+.app{min-height:100vh;display:grid;grid-template-columns:250px 1fr}.sidebar{background:#09101b;border-right:1px solid var(--line);padding:17px 12px;display:flex;flex-direction:column}.nav{display:grid;gap:4px;margin-top:22px}.nav button{text-align:left;border:0;background:transparent;color:var(--muted)}.nav button.active{color:var(--a);background:#102238}.classlist{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}.classitem{padding:10px;border:1px solid var(--line);background:#0c1625;border-radius:10px;margin-top:6px;cursor:pointer}.classitem b{font-size:11px}.classitem small{display:block;font-size:9px;color:var(--muted);margin-top:3px}.me{margin-top:auto;border-top:1px solid var(--line);padding-top:12px;font-size:11px}.main{min-width:0}.top{height:65px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 22px}.top small{color:var(--muted)}.content{max-width:1250px;margin:auto;padding:22px}.page{display:none}.page.active{display:block}.hero{display:flex;justify-content:space-between;gap:12px;margin-bottom:18px}.hero h1{margin:0 0 5px;font-size:27px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}.stat,.panel{background:linear-gradient(180deg,#101a2b,#0c1422);border:1px solid var(--line);border-radius:15px}.stat{padding:15px}.stat b{display:block;font-size:28px}.stat span{font-size:9px;letter-spacing:.13em;color:var(--muted)}.grid2{display:grid;grid-template-columns:1.35fr 1fr;gap:13px;margin-top:13px}.panel{padding:16px}.panel h3{font-size:12px;letter-spacing:.1em;margin:0 0 12px}.post{border-top:1px solid var(--line);padding:12px 0}.post:first-child{border-top:0}.post b{font-size:12px}.post p{font-size:13px;line-height:1.5;white-space:pre-wrap;margin:6px 0}.code{font-size:30px;font-weight:950;letter-spacing:.18em;text-align:center;border:1px dashed #4b678f;border-radius:12px;padding:14px;background:#080f1b}.tag{font-size:9px;padding:5px 7px;border-radius:999px;background:#133021;color:var(--ok);height:max-content}.activity{border:1px solid var(--line);border-radius:13px;padding:14px;background:#0a1220;margin-bottom:10px}.activityhead{display:flex;justify-content:space-between;gap:12px}.activity h3{margin:0;font-size:15px}.activity p{font-size:12px;color:#bac7d9;white-space:pre-wrap;line-height:1.5}.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}.person{border:1px solid var(--line);border-radius:12px;padding:13px;background:#0a1220}.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#17314a;margin-bottom:8px}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}.table{width:100%;border-collapse:collapse;font-size:11px}.table th,.table td{padding:10px;border-bottom:1px solid var(--line);text-align:left}.table th{color:var(--muted);font-size:9px;letter-spacing:.08em}.calendar{display:grid;gap:8px}.event{border-left:3px solid var(--a);padding:10px;background:#0a1220;border-radius:8px}.event b{font-size:12px}.event small{display:block;color:var(--muted);margin-top:4px}.network{height:470px;position:relative;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:radial-gradient(circle,#14233b,#08101c 67%)}.network svg{position:absolute;width:100%;height:100%}.node{position:absolute;transform:translate(-50%,-50%);width:95px;text-align:center}.node i{font-style:normal;width:50px;height:50px;margin:auto;display:grid;place-items:center;border-radius:50%;background:#142a45;border:1px solid #4a6a90}.node.main i{border-color:var(--a);box-shadow:0 0 25px #4adcf455}.node span{display:block;font-size:9px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chat{height:450px;display:flex;flex-direction:column}.chatlog{flex:1;overflow:auto}.msg{margin:7px 0}.msg b{font-size:10px;color:var(--a)}.msg span{display:block;background:#0a1321;padding:8px;border-radius:9px;font-size:12px}.chatrow{display:flex;gap:7px;margin-top:8px}.chatrow input{flex:1;background:#080e19;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px}.empty{text-align:center;color:var(--muted);padding:55px 15px;border:1px dashed var(--line);border-radius:13px}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#14233a;border:1px solid var(--line);padding:10px 14px;border-radius:10px;display:none;z-index:30}.toast.show{display:block}.modal{position:fixed;inset:0;background:#000b;display:none;place-items:center;padding:15px;z-index:20}.modal.show{display:grid}.modalbox{width:min(540px,100%);background:#0d1727;border:1px solid var(--line);border-radius:16px;padding:18px}.modalbox h2{margin-top:0}.notice{padding:10px 12px;border-radius:10px;background:#0d1d2d;border:1px solid var(--line);font-size:11px;margin-bottom:9px}.transfer{border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:9px;background:#0a1220}.transferhead{display:flex;justify-content:space-between;gap:8px}.transfer small{color:var(--muted)}.progress{height:8px;background:#070c14;border-radius:99px;overflow:hidden;margin-top:8px}.bar{height:100%;width:0;background:var(--a)}.hide{display:none!important}
 @media(max-width:880px){.app{grid-template-columns:1fr}.sidebar{position:sticky;top:0;z-index:5;border-right:0;border-bottom:1px solid var(--line);padding:8px;flex-direction:row;align-items:center;gap:7px}.nav{display:flex;overflow:auto;margin:0}.nav button{white-space:nowrap}.classlist,.me{display:none}.grid4{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.top{padding:0 12px}.content{padding:13px}}@media(max-width:500px){.hero{display:block}.hero button{margin-top:9px}.grid4{gap:7px}.stat{padding:11px}.stat b{font-size:22px}}
 </style>
 </head>
@@ -26,7 +26,7 @@
 <section id="people" class="page"><div class="hero"><div><h1>Personas</h1><div class="muted">Integrantes del aula actual.</div></div></div><div id="peopleList" class="people"></div></section>
 <section id="attendance" class="page"><div class="hero"><div><h1>Asistencia</h1><div class="muted">Registro por fecha.</div></div><button id="saveAttendance" class="primary">GUARDAR</button></div><div id="attendanceBox"></div></section>
 <section id="calendar" class="page"><div class="hero"><div><h1>Calendario</h1><div class="muted">Fechas y eventos del aula.</div></div><button id="newEvent" class="primary">+ EVENTO</button></div><div id="eventsList" class="calendar"></div></section>
-<section id="network" class="page"><div class="hero"><div><h1>Red Nexus</h1><div class="muted">Conectividad y transferencia P2P del aula.</div></div><div id="networkCode"></div></div><div class="panel"><div id="networkMap" class="network"></div><div id="transferList" style="margin-top:12px"></div></div></section>
+<section id="network" class="page"><div class="hero"><div><h1>Red Nexus</h1><div class="muted">Conectividad y transferencia P2P del aula.</div></div><div><div id="networkCode"></div><button id="networkAction" class="primary" style="margin-top:7px">ACTIVAR RED</button></div></div><div class="panel"><div id="networkMap" class="network"></div><div id="transferList" style="margin-top:12px"></div></div></section>
 <section id="chat" class="page"><div class="hero"><div><h1>Chat del aula</h1><div class="muted">Comunicación rápida.</div></div></div><div class="panel chat"><div id="chatLog" class="chatlog"></div><div class="chatrow"><input id="chatInput" placeholder="Escribí un mensaje..."><button id="chatSend" class="primary">ENVIAR</button></div></div></section>
 <section id="notifications" class="page"><div class="hero"><div><h1>Avisos</h1><div class="muted">Notificaciones de tus aulas.</div></div></div><div id="noticeList"></div></section>
 </div></main></div>
@@ -57,7 +57,7 @@ function closeModal(){$("modal").classList.remove("show")}$("modalCancel").oncli
 function go(page){document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.id===page));document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===page));const t={home:["Inicio","Centro de mando"],class:["Aula","Anuncios y contexto"],assignments:["Actividades","Tareas, entregas y calificaciones"],materials:["Materiales","Recursos compartidos"],people:["Personas","Integrantes"],attendance:["Asistencia","Control de presencia"],calendar:["Calendario","Eventos del aula"],network:["Red Nexus","Conectividad P2P"],chat:["Chat","Comunicación"],notifications:["Avisos","Notificaciones"]};$("topTitle").textContent=t[page][0];$("topSub").textContent=t[page][1];if(current){if(page==="class")loadClass();if(page==="assignments")loadAssignments();if(page==="materials")loadMaterials();if(page==="people")renderPeople();if(page==="attendance")loadAttendance();if(page==="calendar")loadEvents();if(page==="network")renderNetwork();if(page==="notifications")loadNotifications()}}
 async function boot(){if(!token)return showAuth();try{user=(await api("/me")).user;if(!user)throw Error();showApp()}catch{localStorage.removeItem("nexusToken");token=null;showAuth()}}
 function showAuth(){$("auth").style.display="grid";$("app").classList.add("hide")}
-function showApp(){$("auth").style.display="none";$("app").classList.remove("hide");$("meName").textContent=user.name;$("meRole").textContent=user.role==="teacher"?"DOCENTE":"ALUMNO";$("newClassBtn").style.display=user.role==="teacher"?"inline-block":"none";connectWS();loadAll()}
+function showApp(){$("auth").style.display="none";$("app").classList.remove("hide");$("meName").textContent=user.name;$("meRole").textContent=user.role==="teacher"?"DOCENTE":"ALUMNO";$("newClassBtn").style.display=user.role==="teacher"?"inline-block":"none";$("networkAction").textContent=user.role==="teacher"?"ACTIVAR RED":"CONECTAR CON DOCENTE";connectWS();loadAll()}
 $("switchAuth").onclick=()=>{authMode=authMode==="login"?"register":"login";$("authTitle").textContent=authMode==="login"?"Entrar":"Crear cuenta";$("authBtn").textContent=authMode==="login"?"ENTRAR":"CREAR CUENTA";document.querySelectorAll(".reg").forEach(x=>x.style.display=authMode==="login"?"none":"block")};
 document.querySelectorAll(".reg").forEach(x=>x.style.display="none");
 $("aApi").onchange=()=>{
@@ -93,7 +93,7 @@ $("newClassBtn").onclick=()=>modal("Crear aula",`<div class="form"><input id="mN
 $("joinBtn").onclick=()=>modal("Unirme a un aula",`<div class="form"><input id="mCode" maxlength="6" placeholder="CLAVE DE 6 CARACTERES"></div><div class="notice">La clave es el acceso principal. El docente puede escribirla en el pizarrón o pasarla por chat. No necesitás QR.</div>`,async()=>{try{const x=await api(`/classes/${$("mCode").value.trim().toUpperCase()}/join`,{method:"POST"});current=x.class;closeModal();await loadAll();go("class");toast("Te uniste al aula.")}catch(e){toast(e.message)}});
 async function loadAssignments(){if(!current)return;const x=await api(`/classes/${current.id}/assignments`);$("assignmentList").innerHTML=x.assignments.length?x.assignments.map(a=>{const mine=a.submissions?.find(s=>s.student?.id===user.id),g=mine?.grade;return `<div class="activity"><div class="activityhead"><div><h3>${esc(a.title)}</h3><div class="muted" style="font-size:10px">${a.dueAt?"Entrega: "+new Date(a.dueAt).toLocaleString():"Sin fecha"} · ${a.points} puntos</div></div><span class="tag">${g?g.score+"/"+a.points:mine?"ENTREGADO":"PENDIENTE"}</span></div><p>${esc(a.instructions)}</p>${user.role==="teacher"?`<div class="tablewrap"><table class="table"><tr><th>ALUMNO</th><th>ESTADO</th><th>NOTA</th><th>ACCIÓN</th></tr>${a.submissions.map(s=>`<tr><td>${esc(s.student?.name)}</td><td>${esc(s.status)}</td><td>${s.grade?s.grade.score+"/"+a.points:"—"}</td><td><button onclick="Nexus.grade('${s.id}','${a.points}')">CALIFICAR</button></td></tr>`).join("")}</table></div>`:mine?`<div class="muted" style="font-size:10px">Archivo: ${esc(mine.fileName||"")} · ${g?`Retroalimentación: ${esc(g.feedback||"")}`:"esperando calificación"}</div>`:`<button class="primary" onclick="Nexus.submit('${a.id}')">ENTREGAR ARCHIVO</button>`}</div>`}).join(""):'<div class="empty">No hay actividades.</div>'}
 $("newAssignment").onclick=()=>{if(user.role!=="teacher"){toast("Solo el docente.");return}modal("Nueva actividad",`<div class="form"><input id="mTitle" placeholder="Título"><textarea id="mInst" placeholder="Consigna"></textarea><input id="mDue" type="datetime-local"><input id="mPoints" type="number" min="1" value="100" placeholder="Puntos"></div>`,async()=>{try{await api(`/classes/${current.id}/assignments`,{method:"POST",body:JSON.stringify({title:$("mTitle").value,instructions:$("mInst").value,dueAt:$("mDue").value||null,points:$("mPoints").value})});closeModal();loadAssignments()}catch(e){toast(e.message)}})};
-window.Nexus.submit=async aid=>{const inp=document.createElement("input");inp.type="file";inp.onchange=async()=>{const f=inp.files[0];if(!f)return;toast("Calculando integridad...");const h=await digest(f);try{await api(`/assignments/${aid}/submit`,{method:"POST",body:JSON.stringify({fileName:f.name,fileSize:f.size,sha256:h})});toast("Entrega registrada. El archivo se transferirá por P2P en la siguiente conexión.");loadAssignments()}catch(e){toast(e.message)}};inp.click()};
+window.Nexus.submit=async aid=>{const inp=document.createElement("input");inp.type="file";inp.onchange=async()=>{const f=inp.files[0];if(!f)return;if(f.size>536870912){toast("Archivo demasiado grande (máx. 512 MB).");return}toast("Calculando SHA-256...");const h=await digest(f);try{const x=await api(`/assignments/${aid}/submit`,{method:"POST",body:JSON.stringify({fileName:f.name,fileSize:f.size,sha256:h})});const t=current.members.find(m=>m.role==="teacher");if(t){const p=await ensurePeer(t.id);if(p?.dc?.readyState==="open"){await sendFile(t.id,f,{kind:"submission",assignmentId:aid,submissionId:x.submission.id,sha256:h})}else toast("Entrega registrada. Tocá CONECTAR CON DOCENTE en Red Nexus.")}loadAssignments()}catch(e){toast(e.message)}};inp.click()};
 window.Nexus.grade=(sid,points)=>modal("Calificar entrega",`<div class="form"><input id="gScore" type="number" min="0" max="${points}" placeholder="Puntaje"><textarea id="gFeed" placeholder="Retroalimentación"></textarea></div>`,async()=>{try{await api(`/submissions/${sid}/grade`,{method:"POST",body:JSON.stringify({score:$("gScore").value,feedback:$("gFeed").value})});closeModal();loadAssignments()}catch(e){toast(e.message)}});
 
 async function loadMaterials(){if(!current)return;const x=await api(`/classes/${current.id}/materials`);$("materialsList").innerHTML=x.materials.length?x.materials.map(m=>`<div class="activity"><div class="activityhead"><h3>${esc(m.title)}</h3><span class="tag">P2P</span></div><p>${esc(m.description)}</p><div class="muted" style="font-size:10px">${esc(m.fileName||"Sin archivo")} · ${fmt(m.fileSize)}</div></div>`).join(""):'<div class="empty">No hay materiales.</div>'}
@@ -106,17 +106,154 @@ $("saveAttendance").onclick=async()=>{if(user.role!=="teacher"){toast("Solo el d
 async function loadEvents(){if(!current)return;const x=await api(`/classes/${current.id}/events`);$("eventsList").innerHTML=x.events.length?x.events.map(e=>`<div class="event"><b>${esc(e.title)}</b><small>${new Date(e.startAt).toLocaleString()}${e.endAt?" → "+new Date(e.endAt).toLocaleString():""}</small><div class="muted" style="font-size:11px;margin-top:5px">${esc(e.description)}</div></div>`).join(""):'<div class="empty">No hay eventos.</div>'}
 $("newEvent").onclick=()=>{if(user.role!=="teacher"){toast("Solo el docente.");return}modal("Nuevo evento",`<div class="form"><input id="eTitle" placeholder="Título"><textarea id="eDesc" placeholder="Descripción"></textarea><input id="eStart" type="datetime-local"><input id="eEnd" type="datetime-local"></div>`,async()=>{try{await api(`/classes/${current.id}/events`,{method:"POST",body:JSON.stringify({title:$("eTitle").value,description:$("eDesc").value,startAt:$("eStart").value,endAt:$("eEnd").value||null})});closeModal();loadEvents()}catch(e){toast(e.message)}})};
 
-function renderNetwork(){if(!current)return;const b=$("networkMap"),a=current.members.filter(x=>x.id!==user.id),w=b.clientWidth||700,h=b.clientHeight||470,cx=w/2,cy=h/2,r=Math.min(w,h)*.32,ns=[{...user,main:true,x:cx,y:cy}];a.forEach((m,i)=>{const q=i*2*Math.PI/Math.max(1,a.length)-Math.PI/2;ns.push({...m,x:cx+Math.cos(q)*r,y:cy+Math.sin(q)*r})});let s='<svg><g stroke="#2b4565" stroke-width="1.4">';ns.slice(1).forEach(n=>s+=`<line x1="${cx}" y1="${cy}" x2="${n.x}" y2="${n.y}"/>`);s+='</g></svg>';ns.forEach(n=>s+=`<div class="node ${n.main?"main":""}" style="left:${n.x}px;top:${n.y}px"><i>${n.role==="teacher"?"👨‍🏫":"💻"}</i><span>${esc(n.name)}</span></div>`);b.innerHTML=s}
+function renderNetwork(){if(!current)return;renderTransfers();const b=$("networkMap"),a=current.members.filter(x=>x.id!==user.id),w=b.clientWidth||700,h=b.clientHeight||470,cx=w/2,cy=h/2,r=Math.min(w,h)*.32,ns=[{...user,main:true,x:cx,y:cy}];a.forEach((m,i)=>{const q=i*2*Math.PI/Math.max(1,a.length)-Math.PI/2;ns.push({...m,x:cx+Math.cos(q)*r,y:cy+Math.sin(q)*r})});let s='<svg><g stroke="#2b4565" stroke-width="1.4">';ns.slice(1).forEach(n=>s+=`<line x1="${cx}" y1="${cy}" x2="${n.x}" y2="${n.y}"/>`);s+='</g></svg>';ns.forEach(n=>s+=`<div class="node ${n.main?"main":""}" style="left:${n.x}px;top:${n.y}px"><i>${n.role==="teacher"?"👨‍🏫":"💻"}</i><span>${esc(n.name)}</span></div>`);b.innerHTML=s}
 async function loadNotifications(){const x=await api("/notifications");$("noticeList").innerHTML=x.notifications.length?x.notifications.map(n=>`<div class="notice"><b>${esc(n.title)}</b><div style="margin-top:4px">${esc(n.text)}</div><small class="muted">${new Date(n.createdAt).toLocaleString()}</small></div>`).join(""):'<div class="empty">Sin avisos.</div>'}
 
-function connectWS(){try{if(typeof WebSocket!=="function")return;ws=new WebSocket(((API_BASE||location.origin).replace(/^http/,"ws")));ws.onopen=()=>ws.send(JSON.stringify({type:"auth",token}));ws.onmessage=e=>{const m=JSON.parse(e.data);if(m.type==="post"||m.type==="assignment"||m.type==="submission"||m.type==="grade"||m.type==="material"||m.type==="event")loadAll();if(m.type==="chat")addChat(m.message);if(m.type==="presence")renderNetwork();if(m.type==="signal")rtcSignal(m.from,m.data)}}catch(e){}}
-function peer(id,initiator){if(peers.has(id))return peers.get(id);const pc=new RTCPeerConnection({iceServers:[{urls:"stun:stun.l.google.com:19302"}]});const p={pc,dc:null};peers.set(id,p);pc.onicecandidate=e=>e.candidate&&ws.send(JSON.stringify({type:"signal",to:id,data:{candidate:e.candidate}}));pc.onconnectionstatechange=()=>renderNetwork();pc.ondatachannel=e=>setupDC(id,e.channel);if(initiator){const dc=pc.createDataChannel("nexus-files");setupDC(id,dc);pc.createOffer().then(o=>pc.setLocalDescription(o)).then(()=>ws.send(JSON.stringify({type:"signal",to:id,data:{description:pc.localDescription}})))}return p}
-function setupDC(id,dc){const p=peers.get(id);if(!p)return;p.dc=dc;dc.binaryType="arraybuffer";dc.onopen=()=>{toast("Canal P2P listo con "+(current?.members.find(x=>x.id===id)?.name||"dispositivo"));renderNetwork()};dc.onmessage=e=>incoming(id,e.data)}
-async function rtcSignal(from,d){const p=peer(from,false),pc=p.pc;if(d.description){await pc.setRemoteDescription(d.description);if(d.description.type==="offer"){const a=await pc.createAnswer();await pc.setLocalDescription(a);ws.send(JSON.stringify({type:"signal",to:from,data:{description:pc.localDescription}}))}}else if(d.candidate){try{await pc.addIceCandidate(d.candidate)}catch{}}}
+function connectWS(){
+  try{
+    if(typeof WebSocket!=="function")return;
+    const base=(API_BASE||location.origin).replace(/\/+$/,"");
+    const wsUrl=base.replace(/^https:/,"wss:").replace(/^http:/,"ws:");
+    ws=new WebSocket(wsUrl);
+    ws.onopen=()=>ws.send(JSON.stringify({type:"auth",token}));
+    ws.onmessage=e=>{
+      let m;try{m=JSON.parse(e.data)}catch{return}
+      if(["post","assignment","submission","grade","material","event","member_joined"].includes(m.type))loadAll();
+      if(m.type==="chat")addChat(m.message);
+      if(m.type==="presence")renderNetwork();
+      if(m.type==="network_ready"&&user?.role==="student"&&current?.id===m.classId){
+        const t=current.members.find(x=>x.role==="teacher");if(t)ensurePeer(t.id);
+      }
+      if(m.type==="signal")rtcSignal(m.from,m.data);
+    };
+    ws.onclose=()=>{for(const p of peers.values()){try{p.pc.close()}catch{}}peers.clear();renderNetwork()};
+  }catch{}
+}
+async function ensurePeer(id){
+  if(!ws||ws.readyState!==WebSocket.OPEN)return null;
+  if(peers.has(id))return peers.get(id);
+  return peer(id,true);
+}
+function peer(id,initiator){
+  if(peers.has(id))return peers.get(id);
+  const pc=new RTCPeerConnection({iceServers:[{urls:"stun:stun.l.google.com:19302"}]});
+  const p={pc,dc:null};peers.set(id,p);
+  pc.onicecandidate=e=>e.candidate&&ws?.send(JSON.stringify({type:"signal",to:id,data:{candidate:e.candidate}}));
+  pc.onconnectionstatechange=()=>{if(["failed","closed"].includes(pc.connectionState))peers.delete(id);renderNetwork()};
+  pc.ondatachannel=e=>setupDC(id,e.channel);
+  if(initiator){
+    const dc=pc.createDataChannel("nexus-files",{ordered:true});
+    setupDC(id,dc);
+    pc.createOffer().then(o=>pc.setLocalDescription(o)).then(()=>ws?.send(JSON.stringify({type:"signal",to:id,data:{description:pc.localDescription}}))).catch(()=>{});
+  }
+  return p;
+}
+function setupDC(id,dc){
+  const p=peers.get(id);if(!p)return;
+  p.dc=dc;dc.binaryType="arraybuffer";dc.bufferedAmountLowThreshold=1024*1024;
+  dc.onopen=()=>{toast("Canal P2P listo con "+(current?.members.find(x=>x.id===id)?.name||"dispositivo"));renderNetwork()};
+  dc.onclose=()=>renderNetwork();
+  dc.onerror=()=>toast("Error en el canal P2P.");
+  dc.onmessage=e=>incoming(id,e.data);
+}
+async function rtcSignal(from,d){
+  const p=peer(from,false),pc=p.pc;
+  try{
+    if(d.description){
+      await pc.setRemoteDescription(d.description);
+      if(d.description.type==="offer"){
+        const a=await pc.createAnswer();await pc.setLocalDescription(a);
+        ws?.send(JSON.stringify({type:"signal",to:from,data:{description:pc.localDescription}}));
+      }
+    }else if(d.candidate)await pc.addIceCandidate(d.candidate);
+  }catch{toast("No se pudo establecer la conexión P2P.")}
+}
+async function waitBuffer(dc){
+  if(dc.bufferedAmount<4*1024*1024)return;
+  await new Promise(resolve=>{
+    const fn=()=>{dc.removeEventListener("bufferedamountlow",fn);resolve()};
+    dc.addEventListener("bufferedamountlow",fn);
+  });
+}
+function renderTransfers(){
+  const el=$("transferList");if(!el)return;
+  const jobs=[...transferJobs.values()].sort((a,b)=>b.createdAt-a.createdAt).slice(0,12);
+  el.innerHTML=jobs.length?jobs.map(j=>{
+    const amount=j.direction==="incoming"?j.received:j.sent;
+    const pct=j.size?Math.min(100,Math.round(amount/j.size*100)):0;
+    const action=j.direction==="incoming"&&j.status==="esperando aceptación"?`<button class="primary" onclick="Nexus.acceptTransfer('${j.id}')">ACEPTAR</button> <button onclick="Nexus.rejectTransfer('${j.id}')">RECHAZAR</button>`:"";
+    return `<div class="transfer"><div class="transferhead"><div><b>${esc(j.fileName)}</b><small style="display:block">${j.direction==="incoming"?"De ":"Para "}${esc(j.peerName||"dispositivo")} · ${fmt(j.size)}</small></div><span class="tag">${esc(j.status)}</span></div><div class="progress"><div class="bar" style="width:${pct}%"></div></div><small>${pct}% ${j.error?"· "+esc(j.error):""}</small><div style="margin-top:7px">${action}</div></div>`;
+  }).join(""):'<div class="muted" style="font-size:11px">No hay transferencias.</div>';
+}
+async function sendFile(peerId,file,meta){
+  const dc=peers.get(peerId)?.dc;
+  if(!dc||dc.readyState!=="open"){toast("El canal P2P no está listo.");return false}
+  const tid=crypto.randomUUID();
+  const job={id:tid,direction:"outgoing",fileName:file.name,size:file.size,sent:0,received:0,status:"esperando aceptación",peerName:current?.members.find(x=>x.id===peerId)?.name||"",createdAt:Date.now(),file,meta};
+  transferJobs.set(tid,job);renderTransfers();
+  dc.send(JSON.stringify({type:"file-offer",transferId:tid,fileName:file.name,size:file.size,sha256:meta.sha256||"",kind:meta.kind||"file",assignmentId:meta.assignmentId||null,submissionId:meta.submissionId||null}));
+  return true;
+}
+async function startSending(peerId,job){
+  const dc=peers.get(peerId)?.dc;if(!dc||dc.readyState!=="open")return;
+  job.status="enviando";renderTransfers();
+  const chunk=64*1024;let offset=0;
+  while(offset<job.file.size){
+    await waitBuffer(dc);
+    const buf=await job.file.slice(offset,Math.min(offset+chunk,job.file.size)).arrayBuffer();
+    dc.send(buf);offset+=buf.byteLength;job.sent=offset;renderTransfers();
+    await new Promise(r=>setTimeout(r,0));
+  }
+  dc.send(JSON.stringify({type:"file-end",transferId:job.id}));job.status="enviado ✓";renderTransfers();
+}
+function incoming(peerId,data){
+  let obj=null;if(typeof data==="string"){try{obj=JSON.parse(data)}catch{return}}
+  if(obj?.type==="file-offer"){
+    const job={id:obj.transferId,direction:"incoming",fileName:obj.fileName,size:Number(obj.size||0),received:0,sent:0,status:"esperando aceptación",peerName:current?.members.find(x=>x.id===peerId)?.name||"dispositivo",createdAt:Date.now(),peerId,sha256:obj.sha256,kind:obj.kind,assignmentId:obj.assignmentId,submissionId:obj.submissionId,chunks:[]};
+    transferJobs.set(job.id,job);renderTransfers();toast("Nueva transferencia: "+obj.fileName);return;
+  }
+  if(obj?.type==="file-accept"){const j=transferJobs.get(obj.transferId);if(j)startSending(peerId,j);return}
+  if(obj?.type==="file-reject"){const j=transferJobs.get(obj.transferId);if(j){j.status="rechazado";renderTransfers()}return}
+  if(obj?.type==="file-end"){finishIncoming(obj.transferId);return}
+  const j=[...transferJobs.values()].find(x=>x.direction==="incoming"&&x.peerId===peerId&&x.status==="recibiendo");
+  if(j&&data instanceof ArrayBuffer){j.chunks.push(data);j.received+=data.byteLength;renderTransfers()}
+}
+window.Nexus.acceptTransfer=async tid=>{
+  const j=transferJobs.get(tid);if(!j)return;
+  const dc=peers.get(j.peerId)?.dc;
+  if(!dc||dc.readyState!=="open"){toast("El dispositivo no está conectado.");return}
+  j.status="recibiendo";renderTransfers();dc.send(JSON.stringify({type:"file-accept",transferId:tid}));
+};
+window.Nexus.rejectTransfer=tid=>{
+  const j=transferJobs.get(tid),dc=j&&peers.get(j.peerId)?.dc;
+  if(!j||!dc)return;j.status="rechazado";dc.send(JSON.stringify({type:"file-reject",transferId:tid}));renderTransfers();
+};
+async function finishIncoming(tid){
+  const j=transferJobs.get(tid);if(!j)return;
+  try{
+    const blob=new Blob(j.chunks,{type:"application/octet-stream"});
+    const h=await digest(blob);
+    if(j.sha256&&h!==j.sha256){j.status="ERROR HASH";j.error="Integridad no verificada";renderTransfers();return}
+    const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=j.fileName;a.click();
+    setTimeout(()=>URL.revokeObjectURL(url),30000);
+    j.status="recibido ✓";j.received=blob.size;j.chunks=[];renderTransfers();toast("Archivo recibido y verificado.");
+  }catch(e){j.status="ERROR";j.error=e.message;renderTransfers()}
+}
 async function digest(file){const b=await file.arrayBuffer(),h=await crypto.subtle.digest("SHA-256",b);return [...new Uint8Array(h)].map(x=>x.toString(16).padStart(2,"0")).join("")}
 function localDate(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
 function fmt(n){if(!n)return"0 B";const u=["KB","MB","GB"];let i=-1;do{n/=1024;i++}while(n>=1024&&i<u.length-1);return n.toFixed(n<10?2:1)+" "+u[i]}
 function addChat(m){if(!current||m.classId!==current.id)return;$("chatLog").innerHTML+=`<div class="msg"><b>${esc(m.user?.name)}</b><span>${esc(m.text)}</span></div>`;$("chatLog").scrollTop=$("chatLog").scrollHeight}
+$("networkAction").onclick=async()=>{
+  if(!current||!ws||ws.readyState!==WebSocket.OPEN){toast("Conectá el backend primero.");return}
+  if(user.role==="teacher"){
+    ws.send(JSON.stringify({type:"network_ready",classId:current.id}));
+    toast("Red Nexus activada para el aula.");
+  }else{
+    const t=current.members.find(m=>m.role==="teacher");
+    if(!t){toast("No se encontró al docente.");return}
+    await ensurePeer(t.id);
+  }
+};
 $("chatSend").onclick=()=>{const t=$("chatInput").value.trim();if(!t||!ws||!current)return;ws.send(JSON.stringify({type:"chat",classId:current.id,text:t}));$("chatInput").value=""};$("chatInput").onkeydown=e=>{if(e.key==="Enter")$("chatSend").click()};
 document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>{if(!current&&b.dataset.page!=="home"){toast("Primero seleccioná o creá un aula.");return}go(b.dataset.page)});
 window.addEventListener("resize",()=>{if(current&&$("network").classList.contains("active"))renderNetwork()});
@@ -127,7 +264,7 @@ $("demoBtn").onclick=()=>{
   $("meName").textContent=user.name;$("meRole").textContent="DOCENTE · DEMO";
   $("auth").style.display="none";$("app").classList.remove("hide");
   current={id:"demo-class",code:"NEXUS7",name:"Aula Demo Red Nexus",subject:"Aula digital",description:"Modo demostración local. El backend permite convertir esta experiencia en un aula multi-dispositivo.",teacherId:user.id,members:[user]};
-  $("newClassBtn").style.display="inline-block";$("joinBtn").style.display="none";
+  $("newClassBtn").style.display="inline-block";$("joinBtn").style.display="none";$("networkAction").textContent="MODO DEMO";$("networkAction").disabled=true;
   $("classCode").innerHTML='<div class="code">NEXUS7</div><small class="muted">CLAVE DEMO</small>';
   $("networkCode").innerHTML='<div class="code" style="font-size:18px">NEXUS7</div>';
   $("stats").innerHTML='<div class="stat"><b>1</b><span>AULA</span></div><div class="stat"><b>3</b><span>ACTIVIDADES</span></div><div class="stat"><b>0</b><span>PENDIENTES</span></div><div class="stat"><b>1</b><span>ALUMNOS</span></div>';

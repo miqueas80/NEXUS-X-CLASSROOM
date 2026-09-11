@@ -130,3 +130,5 @@ Usá **ENTRAR EN MODO DEMO LOCAL**. Esto permite mostrar la interfaz y recorrer 
 - La asistencia usa la fecha local del navegador.
 - Si se abre la interfaz como `file://` sin backend, muestra una configuración clara en lugar de intentar usar una ruta inexistente.
 - La URL del backend puede configurarse en el campo de acceso o mediante `?api=https://tu-backend.example`.
+
+\n## v1.4 — Transferencia P2P real\n\nEl flujo de archivos usa `RTCDataChannel`: oferta → aceptación/rechazo → bloques de 64 KiB → reconstrucción → SHA-256 → descarga verificada. El servidor no recibe los bytes del archivo. Para redes escolares restrictivas se recomienda configurar TURN.\n
