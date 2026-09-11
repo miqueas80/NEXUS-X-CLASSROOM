@@ -132,3 +132,18 @@ Usá **ENTRAR EN MODO DEMO LOCAL**. Esto permite mostrar la interfaz y recorrer 
 - La URL del backend puede configurarse en el campo de acceso o mediante `?api=https://tu-backend.example`.
 
 \n## v1.4 — Transferencia P2P real\n\nEl flujo de archivos usa `RTCDataChannel`: oferta → aceptación/rechazo → bloques de 64 KiB → reconstrucción → SHA-256 → descarga verificada. El servidor no recibe los bytes del archivo. Para redes escolares restrictivas se recomienda configurar TURN.\n
+
+## v1.5 — Cero configuración para docentes
+
+La aplicación pasa a usar arquitectura **single-origin**:
+
+- El servidor Node entrega la interfaz y la API desde la misma dirección.
+- El frontend llama automáticamente a `/api`.
+- WebSocket usa automáticamente `ws://` o `wss://` según la página.
+- El docente no ve ni configura "Servidor API".
+- El docente solamente entra, crea el aula y comparte el código de aula.
+- QR queda como opción secundaria, no como requisito.
+
+Para producción se publica **una sola URL de Red Nexus Classroom**. La infraestructura (Node, HTTPS, base de datos, TURN, etc.) queda detrás de esa URL y no forma parte de la configuración del docente.
+
+\n## v1.6 — Permisos y PWA\n\nIncluye centro de permisos dentro de la aplicación: notificaciones, cámara, micrófono, portapapeles e instalación PWA. Los permisos no se solicitan todos al iniciar; se solicitan bajo acción del usuario. Se agregan iconos PWA y manejo de clic en notificaciones.\n

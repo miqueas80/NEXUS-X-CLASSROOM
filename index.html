@@ -8,15 +8,15 @@
 :root{--bg:#070b13;--side:#0a111d;--panel:#101a2b;--panel2:#0c1524;--line:#263753;--text:#edf4ff;--muted:#8fa1bd;--a:#67e8f9;--ok:#58e38b;--warn:#ffd166;--bad:#ff7180}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 30% -10%,#182a47 0,#070b13 46%);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif}button,input,textarea,select{font:inherit}button{border:1px solid var(--line);background:#16243b;color:var(--text);padding:10px 13px;border-radius:10px;cursor:pointer}button:hover:not(:disabled){filter:brightness(1.12)}button:disabled{opacity:.45;cursor:not-allowed}.primary{background:#126d88;border-color:#3bd0ec}.danger{background:#29151b;border-color:#66333e}.ghost{background:transparent}.row{display:flex;gap:8px}.row>*{flex:1}
 #auth{min-height:100vh;display:grid;place-items:center;padding:18px}.authbox{width:min(460px,100%);padding:25px;background:linear-gradient(180deg,#101b2d,#0b1321);border:1px solid var(--line);border-radius:18px;box-shadow:0 25px 90px #0008}.logo{font-weight:950;letter-spacing:.15em}.logo small{display:block;color:var(--muted);font-size:9px;letter-spacing:.2em;margin-top:4px}.form{display:grid;gap:9px}.form input,.form textarea,.form select{width:100%;padding:11px;background:#080e19;border:1px solid var(--line);border-radius:10px;color:var(--text)}.form textarea{min-height:110px}.muted{color:var(--muted)}
-.app{min-height:100vh;display:grid;grid-template-columns:250px 1fr}.sidebar{background:#09101b;border-right:1px solid var(--line);padding:17px 12px;display:flex;flex-direction:column}.nav{display:grid;gap:4px;margin-top:22px}.nav button{text-align:left;border:0;background:transparent;color:var(--muted)}.nav button.active{color:var(--a);background:#102238}.classlist{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}.classitem{padding:10px;border:1px solid var(--line);background:#0c1625;border-radius:10px;margin-top:6px;cursor:pointer}.classitem b{font-size:11px}.classitem small{display:block;font-size:9px;color:var(--muted);margin-top:3px}.me{margin-top:auto;border-top:1px solid var(--line);padding-top:12px;font-size:11px}.main{min-width:0}.top{height:65px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 22px}.top small{color:var(--muted)}.content{max-width:1250px;margin:auto;padding:22px}.page{display:none}.page.active{display:block}.hero{display:flex;justify-content:space-between;gap:12px;margin-bottom:18px}.hero h1{margin:0 0 5px;font-size:27px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}.stat,.panel{background:linear-gradient(180deg,#101a2b,#0c1422);border:1px solid var(--line);border-radius:15px}.stat{padding:15px}.stat b{display:block;font-size:28px}.stat span{font-size:9px;letter-spacing:.13em;color:var(--muted)}.grid2{display:grid;grid-template-columns:1.35fr 1fr;gap:13px;margin-top:13px}.panel{padding:16px}.panel h3{font-size:12px;letter-spacing:.1em;margin:0 0 12px}.post{border-top:1px solid var(--line);padding:12px 0}.post:first-child{border-top:0}.post b{font-size:12px}.post p{font-size:13px;line-height:1.5;white-space:pre-wrap;margin:6px 0}.code{font-size:30px;font-weight:950;letter-spacing:.18em;text-align:center;border:1px dashed #4b678f;border-radius:12px;padding:14px;background:#080f1b}.tag{font-size:9px;padding:5px 7px;border-radius:999px;background:#133021;color:var(--ok);height:max-content}.activity{border:1px solid var(--line);border-radius:13px;padding:14px;background:#0a1220;margin-bottom:10px}.activityhead{display:flex;justify-content:space-between;gap:12px}.activity h3{margin:0;font-size:15px}.activity p{font-size:12px;color:#bac7d9;white-space:pre-wrap;line-height:1.5}.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}.person{border:1px solid var(--line);border-radius:12px;padding:13px;background:#0a1220}.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#17314a;margin-bottom:8px}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}.table{width:100%;border-collapse:collapse;font-size:11px}.table th,.table td{padding:10px;border-bottom:1px solid var(--line);text-align:left}.table th{color:var(--muted);font-size:9px;letter-spacing:.08em}.calendar{display:grid;gap:8px}.event{border-left:3px solid var(--a);padding:10px;background:#0a1220;border-radius:8px}.event b{font-size:12px}.event small{display:block;color:var(--muted);margin-top:4px}.network{height:470px;position:relative;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:radial-gradient(circle,#14233b,#08101c 67%)}.network svg{position:absolute;width:100%;height:100%}.node{position:absolute;transform:translate(-50%,-50%);width:95px;text-align:center}.node i{font-style:normal;width:50px;height:50px;margin:auto;display:grid;place-items:center;border-radius:50%;background:#142a45;border:1px solid #4a6a90}.node.main i{border-color:var(--a);box-shadow:0 0 25px #4adcf455}.node span{display:block;font-size:9px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chat{height:450px;display:flex;flex-direction:column}.chatlog{flex:1;overflow:auto}.msg{margin:7px 0}.msg b{font-size:10px;color:var(--a)}.msg span{display:block;background:#0a1321;padding:8px;border-radius:9px;font-size:12px}.chatrow{display:flex;gap:7px;margin-top:8px}.chatrow input{flex:1;background:#080e19;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px}.empty{text-align:center;color:var(--muted);padding:55px 15px;border:1px dashed var(--line);border-radius:13px}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#14233a;border:1px solid var(--line);padding:10px 14px;border-radius:10px;display:none;z-index:30}.toast.show{display:block}.modal{position:fixed;inset:0;background:#000b;display:none;place-items:center;padding:15px;z-index:20}.modal.show{display:grid}.modalbox{width:min(540px,100%);background:#0d1727;border:1px solid var(--line);border-radius:16px;padding:18px}.modalbox h2{margin-top:0}.notice{padding:10px 12px;border-radius:10px;background:#0d1d2d;border:1px solid var(--line);font-size:11px;margin-bottom:9px}.transfer{border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:9px;background:#0a1220}.transferhead{display:flex;justify-content:space-between;gap:8px}.transfer small{color:var(--muted)}.progress{height:8px;background:#070c14;border-radius:99px;overflow:hidden;margin-top:8px}.bar{height:100%;width:0;background:var(--a)}.hide{display:none!important}
+.app{min-height:100vh;display:grid;grid-template-columns:250px 1fr}.sidebar{background:#09101b;border-right:1px solid var(--line);padding:17px 12px;display:flex;flex-direction:column}.nav{display:grid;gap:4px;margin-top:22px}.nav button{text-align:left;border:0;background:transparent;color:var(--muted)}.nav button.active{color:var(--a);background:#102238}.classlist{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}.classitem{padding:10px;border:1px solid var(--line);background:#0c1625;border-radius:10px;margin-top:6px;cursor:pointer}.classitem b{font-size:11px}.classitem small{display:block;font-size:9px;color:var(--muted);margin-top:3px}.me{margin-top:auto;border-top:1px solid var(--line);padding-top:12px;font-size:11px}.main{min-width:0}.top{height:65px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 22px}.top small{color:var(--muted)}.content{max-width:1250px;margin:auto;padding:22px}.page{display:none}.page.active{display:block}.hero{display:flex;justify-content:space-between;gap:12px;margin-bottom:18px}.hero h1{margin:0 0 5px;font-size:27px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}.stat,.panel{background:linear-gradient(180deg,#101a2b,#0c1422);border:1px solid var(--line);border-radius:15px}.stat{padding:15px}.stat b{display:block;font-size:28px}.stat span{font-size:9px;letter-spacing:.13em;color:var(--muted)}.grid2{display:grid;grid-template-columns:1.35fr 1fr;gap:13px;margin-top:13px}.panel{padding:16px}.panel h3{font-size:12px;letter-spacing:.1em;margin:0 0 12px}.post{border-top:1px solid var(--line);padding:12px 0}.post:first-child{border-top:0}.post b{font-size:12px}.post p{font-size:13px;line-height:1.5;white-space:pre-wrap;margin:6px 0}.code{font-size:30px;font-weight:950;letter-spacing:.18em;text-align:center;border:1px dashed #4b678f;border-radius:12px;padding:14px;background:#080f1b}.tag{font-size:9px;padding:5px 7px;border-radius:999px;background:#133021;color:var(--ok);height:max-content}.activity{border:1px solid var(--line);border-radius:13px;padding:14px;background:#0a1220;margin-bottom:10px}.activityhead{display:flex;justify-content:space-between;gap:12px}.activity h3{margin:0;font-size:15px}.activity p{font-size:12px;color:#bac7d9;white-space:pre-wrap;line-height:1.5}.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}.person{border:1px solid var(--line);border-radius:12px;padding:13px;background:#0a1220}.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#17314a;margin-bottom:8px}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}.table{width:100%;border-collapse:collapse;font-size:11px}.table th,.table td{padding:10px;border-bottom:1px solid var(--line);text-align:left}.table th{color:var(--muted);font-size:9px;letter-spacing:.08em}.calendar{display:grid;gap:8px}.event{border-left:3px solid var(--a);padding:10px;background:#0a1220;border-radius:8px}.event b{font-size:12px}.event small{display:block;color:var(--muted);margin-top:4px}.network{height:470px;position:relative;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:radial-gradient(circle,#14233b,#08101c 67%)}.network svg{position:absolute;width:100%;height:100%}.node{position:absolute;transform:translate(-50%,-50%);width:95px;text-align:center}.node i{font-style:normal;width:50px;height:50px;margin:auto;display:grid;place-items:center;border-radius:50%;background:#142a45;border:1px solid #4a6a90}.node.main i{border-color:var(--a);box-shadow:0 0 25px #4adcf455}.node span{display:block;font-size:9px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chat{height:450px;display:flex;flex-direction:column}.chatlog{flex:1;overflow:auto}.msg{margin:7px 0}.msg b{font-size:10px;color:var(--a)}.msg span{display:block;background:#0a1321;padding:8px;border-radius:9px;font-size:12px}.chatrow{display:flex;gap:7px;margin-top:8px}.chatrow input{flex:1;background:#080e19;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px}.empty{text-align:center;color:var(--muted);padding:55px 15px;border:1px dashed var(--line);border-radius:13px}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#14233a;border:1px solid var(--line);padding:10px 14px;border-radius:10px;display:none;z-index:30}.toast.show{display:block}.modal{position:fixed;inset:0;background:#000b;display:none;place-items:center;padding:15px;z-index:20}.modal.show{display:grid}.modalbox{width:min(540px,100%);background:#0d1727;border:1px solid var(--line);border-radius:16px;padding:18px}.modalbox h2{margin-top:0}.notice{padding:10px 12px;border-radius:10px;background:#0d1d2d;border:1px solid var(--line);font-size:11px;margin-bottom:9px}.transfer{border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:9px;background:#0a1220}.transferhead{display:flex;justify-content:space-between;gap:8px}.transfer small{color:var(--muted)}.permrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.permrow:last-child{border-bottom:0}.permrow small{display:block;color:var(--muted);margin-top:3px}.permrow button{min-width:100px}.progress{height:8px;background:#070c14;border-radius:99px;overflow:hidden;margin-top:8px}.bar{height:100%;width:0;background:var(--a)}.hide{display:none!important}
 @media(max-width:880px){.app{grid-template-columns:1fr}.sidebar{position:sticky;top:0;z-index:5;border-right:0;border-bottom:1px solid var(--line);padding:8px;flex-direction:row;align-items:center;gap:7px}.nav{display:flex;overflow:auto;margin:0}.nav button{white-space:nowrap}.classlist,.me{display:none}.grid4{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.top{padding:0 12px}.content{padding:13px}}@media(max-width:500px){.hero{display:block}.hero button{margin-top:9px}.grid4{gap:7px}.stat{padding:11px}.stat b{font-size:22px}}
 </style>
 </head>
 <body>
-<div id="auth"><div class="authbox"><div class="logo">RED NEXUS <small>CLASSROOM · AULA DIGITAL</small></div><h2 id="authTitle">Entrar</h2><p class="muted" style="font-size:12px">Plataforma independiente para aulas, actividades, entregas, comunicación y Red Nexus.</p><div class="form"><input id="aName" placeholder="Nombre" class="reg"><input id="aEmail" type="email" placeholder="Email"><input id="aPass" type="password" placeholder="Contraseña (mín. 6 caracteres)"><input id="aApi" placeholder="Servidor API (ej.: https://tu-backend.onrender.com)" autocomplete="url"><div class="muted" style="font-size:9px">GitHub Pages solo aloja la interfaz. Para aulas reales necesitás la URL pública del backend Node. Si ejecutás Node en esta misma PC, dejalo vacío.</div><button type="button" id="testApi" class="ghost">PROBAR CONEXIÓN</button><div id="apiStatus" class="muted" style="font-size:10px"></div><select id="aRole" class="reg"><option value="student">Alumno</option><option value="teacher">Docente</option></select><button id="authBtn" class="primary">ENTRAR</button><button id="demoBtn" class="ghost">ENTRAR EN MODO DEMO LOCAL</button><button id="switchAuth" class="ghost">Crear cuenta</button></div></div></div>
+<div id="auth"><div class="authbox"><div class="logo">RED NEXUS <small>CLASSROOM · AULA DIGITAL</small></div><h2 id="authTitle">Entrar</h2><p class="muted" style="font-size:12px">Plataforma independiente para aulas, actividades, entregas, comunicación y Red Nexus.</p><div class="form"><input id="aName" placeholder="Nombre" class="reg"><input id="aEmail" type="email" placeholder="Email"><input id="aPass" type="password" placeholder="Contraseña (mín. 6 caracteres)"><select id="aRole" class="reg"><option value="student">Alumno</option><option value="teacher">Docente</option></select><button id="authBtn" class="primary">ENTRAR</button><button id="demoBtn" class="ghost">ENTRAR EN MODO DEMO LOCAL</button><button id="switchAuth" class="ghost">Crear cuenta</button></div></div></div>
 
 <div id="app" class="app hide">
-<aside class="sidebar"><div class="logo">RED NEXUS <small>CLASSROOM</small></div><nav class="nav"><button class="active" data-page="home">⌂ Inicio</button><button data-page="class">▣ Aula</button><button data-page="assignments">✓ Actividades</button><button data-page="materials">▤ Materiales</button><button data-page="people">♙ Personas</button><button data-page="attendance">◷ Asistencia</button><button data-page="calendar">◫ Calendario</button><button data-page="network">⌁ Red Nexus</button><button data-page="chat">◌ Chat</button><button data-page="notifications">● Avisos</button></nav><div id="classlist" class="classlist"></div><div class="me"><b id="meName"></b><div id="meRole" class="muted"></div><button id="logout" class="ghost" style="width:100%;margin-top:8px">SALIR</button></div></aside>
+<aside class="sidebar"><div class="logo">RED NEXUS <small>CLASSROOM</small></div><nav class="nav"><button class="active" data-page="home">⌂ Inicio</button><button data-page="class">▣ Aula</button><button data-page="assignments">✓ Actividades</button><button data-page="materials">▤ Materiales</button><button data-page="people">♙ Personas</button><button data-page="attendance">◷ Asistencia</button><button data-page="calendar">◫ Calendario</button><button data-page="network">⌁ Red Nexus</button><button data-page="chat">◌ Chat</button><button data-page="notifications">● Avisos</button><button data-page="settings">⚙ Configuración</button></nav><div id="classlist" class="classlist"></div><div class="me"><b id="meName"></b><div id="meRole" class="muted"></div><button id="logout" class="ghost" style="width:100%;margin-top:8px">SALIR</button></div></aside>
 <main class="main"><header class="top"><div><b id="topTitle">Inicio</b><small id="topSub" style="display:block">Centro de mando</small></div><div><button id="joinBtn">+ UNIRME</button><button id="newClassBtn" class="primary">+ AULA</button></div></header>
 <div class="content">
 <section id="home" class="page active"><div class="hero"><div><h1>Centro de mando</h1><div class="muted">Todo tu espacio educativo en un solo lugar.</div></div></div><div id="stats" class="grid4"></div><div class="grid2"><div class="panel"><h3>ACTIVIDAD RECIENTE</h3><div id="recent"></div></div><div class="panel"><h3>MIS AULAS</h3><div id="classes"></div></div></div></section>
@@ -26,6 +26,28 @@
 <section id="people" class="page"><div class="hero"><div><h1>Personas</h1><div class="muted">Integrantes del aula actual.</div></div></div><div id="peopleList" class="people"></div></section>
 <section id="attendance" class="page"><div class="hero"><div><h1>Asistencia</h1><div class="muted">Registro por fecha.</div></div><button id="saveAttendance" class="primary">GUARDAR</button></div><div id="attendanceBox"></div></section>
 <section id="calendar" class="page"><div class="hero"><div><h1>Calendario</h1><div class="muted">Fechas y eventos del aula.</div></div><button id="newEvent" class="primary">+ EVENTO</button></div><div id="eventsList" class="calendar"></div></section>
+
+<section id="settings" class="page">
+  <div class="hero"><div><h1>Configuración</h1><div class="muted">Permisos y experiencia de Red Nexus. No hace falta configurar servidores.</div></div></div>
+  <div class="grid2">
+    <div class="panel">
+      <h3>Permisos del dispositivo</h3>
+      <div class="permrow"><div><b>🔔 Notificaciones</b><small id="permNotifyText">Avisos de aulas y entregas</small></div><button id="permNotify" class="primary">ACTIVAR</button></div>
+      <div class="permrow"><div><b>📷 Cámara</b><small id="permCameraText">QR, foto y videollamada cuando una función lo requiera</small></div><button id="permCamera">PROBAR</button></div>
+      <div class="permrow"><div><b>🎤 Micrófono</b><small id="permMicText">Audio cuando una función lo requiera</small></div><button id="permMic">PROBAR</button></div>
+      <div class="permrow"><div><b>📋 Portapapeles</b><small id="permClipText">Copiar códigos y pegar contenido</small></div><button id="permClip">COMPROBAR</button></div>
+      <div class="permrow"><div><b>📱 Instalar como app</b><small id="permPwaText">Experiencia tipo aplicación</small></div><button id="permPwa">INSTALAR</button></div>
+      <div class="muted" style="margin-top:12px;font-size:10px">Red Nexus no pide todos los permisos al entrar. Cada permiso se solicita únicamente cuando activás su función.</div>
+    </div>
+    <div class="panel">
+      <h3>Estado</h3>
+      <div id="permStatus" class="muted">Listo.</div>
+      <hr>
+      <h3>Privacidad</h3>
+      <div class="muted">Los archivos de transferencia P2P viajan directamente entre dispositivos cuando WebRTC logra conexión. La aplicación no solicita permisos permanentes que no necesite.</div>
+    </div>
+  </div>
+</section>
 <section id="network" class="page"><div class="hero"><div><h1>Red Nexus</h1><div class="muted">Conectividad y transferencia P2P del aula.</div></div><div><div id="networkCode"></div><button id="networkAction" class="primary" style="margin-top:7px">ACTIVAR RED</button></div></div><div class="panel"><div id="networkMap" class="network"></div><div id="transferList" style="margin-top:12px"></div></div></section>
 <section id="chat" class="page"><div class="hero"><div><h1>Chat del aula</h1><div class="muted">Comunicación rápida.</div></div></div><div class="panel chat"><div id="chatLog" class="chatlog"></div><div class="chatrow"><input id="chatInput" placeholder="Escribí un mensaje..."><button id="chatSend" class="primary">ENVIAR</button></div></div></section>
 <section id="notifications" class="page"><div class="hero"><div><h1>Avisos</h1><div class="muted">Notificaciones de tus aulas.</div></div></div><div id="noticeList"></div></section>
@@ -37,17 +59,13 @@
 (()=>{"use strict";
 const $=id=>document.getElementById(id), esc=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 let token=localStorage.nexusToken||null,user=null,current=null,ws=null,authMode="login",peers=new Map(),transferJobs=new Map();
-const DEFAULT_API=(location.protocol==="file:"||location.hostname.endsWith("github.io"))?(localStorage.nexusApiBase||""):location.origin;
-let API_BASE=(localStorage.nexusApiBase||DEFAULT_API).replace(/\/+$/,"");
-$("aApi").value=API_BASE;
-function apiUrl(path){if(!API_BASE)throw Error("Backend no configurado. Escribí la URL del Servidor API o usá el Modo Demo.");return API_BASE+"/api"+path}
+const API_BASE="";
 const api=async(path,opt={})=>{
   opt.headers={...(opt.headers||{}),"Content-Type":"application/json",...(token?{Authorization:"Bearer "+token}:{})};
   let r;
-  try{r=await fetch(apiUrl(path),opt)}catch(e){throw Error("No se pudo conectar con el servidor. Configurá el Servidor API.")}
-  const text=await r.text();
-  let j;
-  try{j=JSON.parse(text)}catch{throw Error("El servidor respondió HTML en vez de JSON. Estás usando la web sin conectar el backend de Red Nexus.")}
+  try{r=await fetch("/api"+path,opt)}catch(e){throw Error("No se pudo conectar con Red Nexus.")}
+  const text=await r.text(); let j;
+  try{j=JSON.parse(text)}catch{throw Error("Red Nexus no pudo comunicarse con el servidor.")}
   if(!r.ok)throw Error(j.error||"Error");
   return j;
 };
@@ -64,24 +82,7 @@ $("aApi").onchange=()=>{
   API_BASE=$("aApi").value.trim().replace(/\/+$/,"");
   if(API_BASE)localStorage.nexusApiBase=API_BASE; else localStorage.removeItem("nexusApiBase");
 };
-function saveApiBase(){
-  API_BASE=$("aApi").value.trim().replace(/\/+$/,"");
-  if(API_BASE)localStorage.nexusApiBase=API_BASE; else localStorage.removeItem("nexusApiBase");
-}
-$("testApi").onclick=async()=>{
-  saveApiBase();
-  $("apiStatus").textContent="Probando...";
-  try{
-    const r=await fetch(apiUrl("/health"),{cache:"no-store"});
-    const text=await r.text();
-    if(!r.ok) throw Error("HTTP "+r.status);
-    const j=JSON.parse(text);
-    $("apiStatus").textContent=j.ok?"✓ Backend Red Nexus conectado":"Respuesta inesperada.";
-  }catch(e){
-    $("apiStatus").textContent="✕ No hay backend en esa dirección.";
-  }
-};
-$("authBtn").onclick=async()=>{saveApiBase();try{const path=authMode==="login"?"/login":"/register",b={name:$("aName").value,email:$("aEmail").value,password:$("aPass").value,role:$("aRole").value},x=await api(path,{method:"POST",body:JSON.stringify(b)});token=x.token;localStorage.nexusToken=token;user=x.user;showApp()}catch(e){toast(e.message)}};
+$("authBtn").onclick=async()=>{try{const path=authMode==="login"?"/login":"/register",b={name:$("aName").value,email:$("aEmail").value,password:$("aPass").value,role:$("aRole").value},x=await api(path,{method:"POST",body:JSON.stringify(b)});token=x.token;localStorage.nexusToken=token;user=x.user;showApp()}catch(e){toast(e.message)}};
 $("logout").onclick=()=>{localStorage.removeItem("nexusToken");location.reload()};
 async function loadAll(){await loadClasses();await loadDashboard();if(current)await loadClass()}
 async function loadDashboard(){try{const x=await api("/dashboard");$("stats").innerHTML=`<div class="stat"><b>${x.stats.classes}</b><span>AULAS</span></div><div class="stat"><b>${x.stats.assignments}</b><span>ACTIVIDADES</span></div><div class="stat"><b>${x.stats.pending}</b><span>PENDIENTES</span></div><div class="stat"><b>${x.stats.students}</b><span>ALUMNOS</span></div>`;$("recent").innerHTML=x.recent.length?x.recent.map(r=>`<div class="post"><b>${esc(r.kind==="post"?"Anuncio":"Actividad")}</b><p>${esc(r.text)}</p></div>`).join(""):'<div class="muted">Sin actividad.</div>'}catch(e){toast(e.message)}}
@@ -112,14 +113,13 @@ async function loadNotifications(){const x=await api("/notifications");$("notice
 function connectWS(){
   try{
     if(typeof WebSocket!=="function")return;
-    const base=(API_BASE||location.origin).replace(/\/+$/,"");
-    const wsUrl=base.replace(/^https:/,"wss:").replace(/^http:/,"ws:");
+    const wsUrl=(location.protocol==="https:"?"wss://":"ws://")+location.host;
     ws=new WebSocket(wsUrl);
     ws.onopen=()=>ws.send(JSON.stringify({type:"auth",token}));
     ws.onmessage=e=>{
       let m;try{m=JSON.parse(e.data)}catch{return}
       if(["post","assignment","submission","grade","material","event","member_joined"].includes(m.type))loadAll();
-      if(m.type==="chat")addChat(m.message);
+      if(m.type==="chat"){addChat(m.message);notifyUser("Red Nexus · mensaje",m.message?.text||"Nuevo mensaje");}
       if(m.type==="presence")renderNetwork();
       if(m.type==="network_ready"&&user?.role==="student"&&current?.id===m.classId){
         const t=current.members.find(x=>x.role==="teacher");if(t)ensurePeer(t.id);
@@ -210,7 +210,7 @@ function incoming(peerId,data){
   let obj=null;if(typeof data==="string"){try{obj=JSON.parse(data)}catch{return}}
   if(obj?.type==="file-offer"){
     const job={id:obj.transferId,direction:"incoming",fileName:obj.fileName,size:Number(obj.size||0),received:0,sent:0,status:"esperando aceptación",peerName:current?.members.find(x=>x.id===peerId)?.name||"dispositivo",createdAt:Date.now(),peerId,sha256:obj.sha256,kind:obj.kind,assignmentId:obj.assignmentId,submissionId:obj.submissionId,chunks:[]};
-    transferJobs.set(job.id,job);renderTransfers();toast("Nueva transferencia: "+obj.fileName);return;
+    transferJobs.set(job.id,job);renderTransfers();toast("Nueva transferencia: "+obj.fileName);notifyUser("Red Nexus · archivo",obj.fileName+" espera aceptación.");return;
   }
   if(obj?.type==="file-accept"){const j=transferJobs.get(obj.transferId);if(j)startSending(peerId,j);return}
   if(obj?.type==="file-reject"){const j=transferJobs.get(obj.transferId);if(j){j.status="rechazado";renderTransfers()}return}
@@ -274,6 +274,62 @@ $("demoBtn").onclick=()=>{
   $("summary").innerHTML="<b>1</b> integrante<br><b>Modo demo</b><br><br>La interfaz funciona sin servidor para presentar el concepto.";
   renderPeople();renderNetwork();go("class");
 };
+
+let deferredInstallPrompt=null;
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstallPrompt=e;updatePermissions()});
+function permState(name){
+  if(!navigator.permissions?.query)return "no disponible";
+  return navigator.permissions.query({name}).then(x=>x.state).catch(()=>"no disponible");
+}
+async function updatePermissions(){
+  const status=$("permStatus"); if(!status)return;
+  const items=[];
+  if("Notification"in window){items.push("Notificaciones: "+Notification.permission)}
+  for(const [label,name] of [["Cámara","camera"],["Micrófono","microphone"]]){
+    try{items.push(label+": "+await permState(name))}catch{}
+  }
+  $("permNotifyText").textContent="Estado: "+(("Notification"in window)?Notification.permission:"no disponible");
+  $("permPwaText").textContent=deferredInstallPrompt?"La app puede instalarse ahora":"Instalación gestionada por el navegador";
+  status.innerHTML=items.join("<br>");
+}
+$("permNotify").onclick=async()=>{
+  try{
+    if(!("Notification"in window))throw Error("Este navegador no admite notificaciones.");
+    const r=await Notification.requestPermission();
+    $("permNotifyText").textContent="Estado: "+r;
+    if(r==="granted")toast("Notificaciones activadas.");
+    else toast("El navegador no concedió notificaciones.");
+    updatePermissions();
+  }catch(e){toast(e.message)}
+};
+async function temporaryMedia(kind){
+  try{
+    if(!navigator.mediaDevices?.getUserMedia)throw Error("El navegador no permite acceder a "+kind+".");
+    const stream=await navigator.mediaDevices.getUserMedia(kind==="camera"?{video:true}:{audio:true});
+    stream.getTracks().forEach(t=>t.stop());
+    toast((kind==="camera"?"Cámara":"Micrófono")+" autorizado.");
+    updatePermissions();
+  }catch(e){toast("Permiso no concedido o dispositivo no disponible.")}
+}
+$("permCamera").onclick=()=>temporaryMedia("camera");
+$("permMic").onclick=()=>temporaryMedia("microphone");
+$("permClip").onclick=async()=>{
+  try{
+    if(!navigator.clipboard?.writeText)throw Error();
+    await navigator.clipboard.writeText("Red Nexus");
+    $("permClipText").textContent="Portapapeles disponible.";
+    toast("Portapapeles comprobado.");
+  }catch{$("permClipText").textContent="El navegador requiere interacción o no lo permite.";toast("No se pudo comprobar el portapapeles.")}
+};
+$("permPwa").onclick=async()=>{
+  if(deferredInstallPrompt){
+    deferredInstallPrompt.prompt();
+    try{await deferredInstallPrompt.userChoice}catch{}
+    deferredInstallPrompt=null;updatePermissions();return;
+  }
+  toast("El navegador controla la instalación. Usá el menú 'Instalar aplicación' si aparece.");
+};
+updatePermissions();
 boot();
 })();
 </script>
