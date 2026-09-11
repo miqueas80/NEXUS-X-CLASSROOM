@@ -91,3 +91,15 @@ La v1.0 contiene la arquitectura P2P y la lógica de integridad, pero las entreg
 - Moderación.
 - Administración de aulas.
 - Modo offline avanzado y sincronización.
+
+
+## Si aparece `Unexpected token '<', "<html>" is not valid JSON`
+
+Ese mensaje significa que el frontend intentó llamar a `/api/...` pero recibió una página HTML en lugar de la respuesta JSON del backend. Es típico al abrir `index.html`/GitHub Pages sin tener conectado el servidor Node.
+
+Soluciones:
+
+1. **Prueba local completa:** ejecuta `npm install` y `npm start`, y abre `http://localhost:8080`.
+2. **Frontend en GitHub Pages + backend separado:** en la pantalla de acceso, completa **Servidor API** con la URL pública de tu backend, por ejemplo `https://tu-backend.example.com`. El campo queda guardado en el navegador.
+3. El backend expone `GET /api/health`; si responde JSON con `ok:true`, la conexión está correcta.
+4. Para WebRTC desde redes escolares, HTTPS/WSS y un servidor TURN pueden ser necesarios.

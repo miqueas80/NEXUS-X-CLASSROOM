@@ -1,0 +1,13 @@
+{
+  "name": "red-nexus-classroom",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Aula digital independiente con Red Nexus P2P",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}
