@@ -103,3 +103,30 @@ Soluciones:
 2. **Frontend en GitHub Pages + backend separado:** en la pantalla de acceso, completa **Servidor API** con la URL pública de tu backend, por ejemplo `https://tu-backend.example.com`. El campo queda guardado en el navegador.
 3. El backend expone `GET /api/health`; si responde JSON con `ok:true`, la conexión está correcta.
 4. Para WebRTC desde redes escolares, HTTPS/WSS y un servidor TURN pueden ser necesarios.
+
+
+## Diagnóstico de la pantalla "El servidor respondió HTML en vez de JSON"
+
+No es un problema de contraseña. Si la interfaz está en GitHub Pages y el campo **Servidor API** está vacío, `/api/login` apunta al propio sitio estático y GitHub Pages devuelve `index.html`. Por eso aparece el carácter `<` (inicio de HTML) donde la aplicación esperaba JSON.
+
+### Para una demostración sin backend
+Usá **ENTRAR EN MODO DEMO LOCAL**. Esto permite mostrar la interfaz y recorrer el concepto en una sola máquina.
+
+### Para una clase real con varios dispositivos
+1. Levantá `server.js` en un servidor/PC.
+2. Publicalo con una URL HTTPS.
+3. En la pantalla de acceso poné esa URL en **Servidor API**.
+4. Tocá **PROBAR CONEXIÓN**.
+5. Si aparece `✓ Backend Red Nexus conectado`, recién ahí usá Entrar/Crear cuenta.
+
+**GitHub Pages no ejecuta Node.js.** GitHub puede alojar la interfaz, pero la API/WebSocket de Classroom necesita un proceso backend en otro servicio o equipo.
+
+
+## v1.1 — correcciones adicionales
+
+- El backend no se cae si `ws` no está instalado: la API HTTP sigue disponible y `/api/health` informa si hay tiempo real.
+- Un docente solo puede administrar sus propias aulas.
+- Los alumnos no reciben la clave privada del aula en las respuestas de API.
+- La asistencia usa la fecha local del navegador.
+- Si se abre la interfaz como `file://` sin backend, muestra una configuración clara en lugar de intentar usar una ruta inexistente.
+- La URL del backend puede configurarse en el campo de acceso o mediante `?api=https://tu-backend.example`.

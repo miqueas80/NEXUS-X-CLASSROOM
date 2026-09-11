@@ -2,7 +2,8 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
-const WebSocket = require("ws");
+let WebSocket = null;
+try { WebSocket = require("ws"); } catch (e) { console.warn("[NEXUS] ws no está instalado; chat/señalización desactivados hasta ejecutar npm install."); }
 
 const PORT = Number(process.env.PORT || 8080);
 const ROOT = __dirname;
@@ -71,7 +72,7 @@ function out(res,status,data){
 }
 function cls(x){ return db.classes.find(c=>c.id===x)||db.classes.find(c=>c.code===String(x||"").toUpperCase()); }
 function members(c){ return c.members.map(id=>safeUser(db.users.find(u=>u.id===id))).filter(Boolean); }
-function teacher(u,c){ return !!u&&!!c&&(u.id===c.teacherId||u.role==="teacher"); }
+function teacher(u,c){ return !!u&&!!c&&u.id===c.teacherId; }
 function member(u,c){ return !!u&&!!c&&c.members.includes(u.id); }
 function notify(userId,title,text,type="info",classId=null){
   const n={id:uid(),userId,title,text,type,classId,read:false,createdAt:now()};
@@ -86,14 +87,16 @@ function broadcastClass(classId,msg,except){
     if(ws?.readyState===1)ws.send(raw);
   }
 }
-function publicClass(c){
-  return {...c,members:members(c)};
+function publicClass(c, revealCode=false){
+  const x={...c,members:members(c)};
+  if(!revealCode) delete x.code;
+  return x;
 }
 
 async function api(req,res,url){
   if(req.method==="OPTIONS"){res.writeHead(204,{"Access-Control-Allow-Origin":"*","Access-Control-Allow-Headers":"Content-Type, Authorization","Access-Control-Allow-Methods":"GET,POST,PUT,DELETE,OPTIONS"});return res.end();}
   try{
-    if(url==="/api/health"&&req.method==="GET")return out(res,200,{ok:true,service:"red-nexus-classroom",version:"1.0"});
+    if(url==="/api/health"&&req.method==="GET")return out(res,200,{ok:true,service:"red-nexus-classroom",version:"1.1",realtime:!!WebSocket});
     if(url==="/api/register"&&req.method==="POST"){
       const b=await parseBody(req);
       if(!b.name||!b.email||!b.password||String(b.password).length<6)return out(res,400,{error:"Nombre, email y contraseña (mínimo 6 caracteres) son obligatorios."});
@@ -123,23 +126,23 @@ async function api(req,res,url){
       return out(res,200,{stats:{classes:cs.length,assignments:as.length,pending:pending.length,students:cs.reduce((n,c)=>n+c.members.length-1,0)},recent});
     }
 
-    if(url==="/api/classes"&&req.method==="GET")return out(res,200,{classes:db.classes.filter(c=>c.members.includes(u.id)).map(publicClass)});
+    if(url==="/api/classes"&&req.method==="GET")return out(res,200,{classes:db.classes.filter(c=>c.members.includes(u.id)).map(c=>publicClass(c,u.id===c.teacherId))});
     if(url==="/api/classes"&&req.method==="POST"){
       if(u.role!=="teacher")return out(res,403,{error:"Solo docentes pueden crear aulas."});
       const b=await parseBody(req);
       const c={id:uid(),code:code(),name:String(b.name||"Aula Nexus").slice(0,80),subject:String(b.subject||"").slice(0,80),description:String(b.description||"").slice(0,500),teacherId:u.id,members:[u.id],createdAt:now(),active:true};
-      db.classes.push(c);save();return out(res,201,{class:publicClass(c)});
+      db.classes.push(c);save();return out(res,201,{class:publicClass(c,true)});
     }
     const cRoute=url.match(/^\/api\/classes\/([^/]+)$/);
     if(cRoute&&req.method==="GET"){
       const c=cls(cRoute[1]);if(!member(u,c))return out(res,404,{error:"Aula no encontrada."});
-      return out(res,200,{class:publicClass(c)});
+      return out(res,200,{class:publicClass(c,u.id===c.teacherId)});
     }
     const join=url.match(/^\/api\/classes\/([^/]+)\/join$/);
     if(join&&req.method==="POST"){
       const c=cls(join[1]);if(!c)return out(res,404,{error:"Clave inválida."});
       if(!c.members.includes(u.id)){c.members.push(u.id);notify(c.teacherId,"Nuevo integrante",`${u.name} se unió a ${c.name}`,"info",c.id);save();broadcastClass(c.id,{type:"member_joined",user:safeUser(u)},u.id);}
-      return out(res,200,{class:publicClass(c)});
+      return out(res,200,{class:publicClass(c,u.id===c.teacherId)});
     }
 
     const posts=url.match(/^\/api\/classes\/([^/]+)\/posts$/);
@@ -236,6 +239,7 @@ const server=http.createServer(async(req,res)=>{
   res.writeHead(200,{"Content-Type":types[path.extname(f)]||"application/octet-stream","Cache-Control":"no-store"});fs.createReadStream(f).pipe(res);
 });
 
+if (WebSocket) {
 const wss=new WebSocket.Server({server});
 wss.on("connection",ws=>{
   let userId=null;
@@ -257,4 +261,5 @@ wss.on("connection",ws=>{
   });
   ws.on("close",()=>{if(userId&&sockets.get(userId)===ws)sockets.delete(userId)});
 });
-server.listen(PORT,()=>console.log(`RED NEXUS CLASSROOM v1.0 → http://localhost:${PORT}`));
+}
+server.listen(PORT,()=>console.log(`RED NEXUS CLASSROOM v1.1 → http://localhost:${PORT}`));
