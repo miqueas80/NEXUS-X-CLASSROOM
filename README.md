@@ -148,3 +148,7 @@ Para producción se publica **una sola URL de Red Nexus Classroom**. La infraest
 
 \n## v1.6 — Permisos y PWA\n\nIncluye centro de permisos dentro de la aplicación: notificaciones, cámara, micrófono, portapapeles e instalación PWA. Los permisos no se solicitan todos al iniciar; se solicitan bajo acción del usuario. Se agregan iconos PWA y manejo de clic en notificaciones.\n
 \n## v1.7 — Corrección de bloqueo de interfaz\n\nSe corrigió un error de JavaScript introducido al ocultar la configuración de API: quedaba un listener apuntando a un campo eliminado (`aApi`), provocando una excepción durante el arranque y dejando todos los botones inactivos. También se ajustaron la navegación de Configuración y las rutas PWA relativas.\n
+
+## v1.9 — Inicio resistente
+
+La interfaz ya no queda inutilizable cuando se abre desde un hosting estático sin backend. El arranque comprueba `/api/health`; si no existe backend, Login/Crear cuenta pueden usar un modo local explícito y Demo Local funciona sin servidor. Para aulas multi-dispositivo reales, el backend sigue siendo necesario y se sirve bajo el mismo origen.

@@ -60,29 +60,43 @@
 const $=id=>document.getElementById(id), esc=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 let token=localStorage.nexusToken||null,user=null,current=null,ws=null,authMode="login",peers=new Map(),transferJobs=new Map();
 const API_BASE="";
+let backendAvailable=false,localMode=localStorage.nexusLocalMode==="1";
+async function probeBackend(){try{const r=await fetch("/api/health",{cache:"no-store"});backendAvailable=r.ok;return backendAvailable}catch{backendAvailable=false;return false}}
+function localUser(){try{return JSON.parse(localStorage.nexusLocalUser||"null")}catch{return null}}
+function saveLocalUser(u){localStorage.nexusLocalUser=JSON.stringify(u);localStorage.nexusLocalMode="1";localMode=true}
+function localClasses(){try{return JSON.parse(localStorage.nexusLocalClasses||"[]")}catch{return []}}
+function saveLocalClasses(x){localStorage.nexusLocalClasses=JSON.stringify(x)}
 const api=async(path,opt={})=>{
+  if(localMode && !backendAvailable)return localApi(path,opt);
   opt.headers={...(opt.headers||{}),"Content-Type":"application/json",...(token?{Authorization:"Bearer "+token}:{})};
   let r;
-  try{r=await fetch("/api"+path,opt)}catch(e){throw Error("No se pudo conectar con Red Nexus.")}
+  try{r=await fetch("/api"+path,opt)}catch(e){backendAvailable=false;if(path==="/login"||path==="/register")return localApi(path,opt);throw Error("No se pudo conectar con Red Nexus. Podés usar el modo local mientras no haya servidor publicado.")}
   const text=await r.text(); let j;
-  try{j=JSON.parse(text)}catch{throw Error("Red Nexus no pudo comunicarse con el servidor.")}
+  try{j=JSON.parse(text)}catch{throw Error("El servidor respondió una página en vez de datos. Abrí Red Nexus desde su servidor, no como archivo HTML.")}
   if(!r.ok)throw Error(j.error||"Error");
-  return j;
+  backendAvailable=true;return j;
 };
+async function localApi(path,opt={}){
+  const method=opt.method||"GET";
+  if(path==="/login"&&method==="POST"){const b=JSON.parse(opt.body||"{}");const u=localUser();if(!u||u.email!==String(b.email||"").trim().toLowerCase())throw Error("Cuenta local no encontrada. Usá Crear cuenta o Modo Demo Local.");if(u.password!==String(b.password||""))throw Error("Contraseña incorrecta.");token="local-"+u.id;localStorage.nexusToken=token;return {user:u,token}}
+  if(path==="/register"&&method==="POST"){const b=JSON.parse(opt.body||"{}");if(!b.name||!b.email||String(b.password||"").length<6)throw Error("Completá nombre, email y una contraseña de 6 caracteres o más.");const u={id:"local-"+crypto.randomUUID(),name:String(b.name).trim(),email:String(b.email).trim().toLowerCase(),password:String(b.password),role:b.role==="teacher"?"teacher":"student",createdAt:Date.now()};saveLocalUser(u);token="local-"+u.id;localStorage.nexusToken=token;return {user:u,token}}
+  if(path==="/me")return {user:localUser()};
+  if(path==="/classes"&&method==="GET")return {classes:localClasses()};
+  if(path==="/classes"&&method==="POST"){const b=JSON.parse(opt.body||"{}");const u=localUser();if(u?.role!=="teacher")throw Error("Solo el docente puede crear aulas.");const x=localClasses();const c={id:"local-class-"+crypto.randomUUID(),code:Math.random().toString(36).slice(2,8).toUpperCase(),name:b.name||"Aula Nexus",subject:b.subject||"",description:b.description||"",teacherId:u.id,members:[u],active:true};x.push(c);saveLocalClasses(x);return {class:c}}
+  if(path.startsWith("/classes/")&&method==="GET"){const id=path.split("/")[2],c=localClasses().find(x=>x.id===id||x.code===id);if(!c)throw Error("Aula no encontrada.");return {class:c}}
+  throw Error("Esta función requiere el servidor de Red Nexus. Para probar la interfaz, usá Modo Demo Local.");
+}
+
 const toast=x=>{$("toast").textContent=x;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),2600)};
 function modal(title,body,ok){$("modalTitle").textContent=title;$("modalBody").innerHTML=body;$("modal").classList.add("show");$("modalOk").onclick=ok}
 function closeModal(){$("modal").classList.remove("show")}$("modalCancel").onclick=closeModal;
-function go(page){document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.id===page));document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===page));const t={home:["Inicio","Centro de mando"],class:["Aula","Anuncios y contexto"],assignments:["Actividades","Tareas, entregas y calificaciones"],materials:["Materiales","Recursos compartidos"],people:["Personas","Integrantes"],attendance:["Asistencia","Control de presencia"],calendar:["Calendario","Eventos del aula"],network:["Red Nexus","Conectividad P2P"],chat:["Chat","Comunicación"],notifications:["Avisos","Notificaciones"]};$("topTitle").textContent=t[page][0];$("topSub").textContent=t[page][1];if(current){if(page==="class")loadClass();if(page==="assignments")loadAssignments();if(page==="materials")loadMaterials();if(page==="people")renderPeople();if(page==="attendance")loadAttendance();if(page==="calendar")loadEvents();if(page==="network")renderNetwork();if(page==="notifications")loadNotifications()}}
-async function boot(){if(!token)return showAuth();try{user=(await api("/me")).user;if(!user)throw Error();showApp()}catch{localStorage.removeItem("nexusToken");token=null;showAuth()}}
+function go(page){document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.id===page));document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===page));const t={home:["Inicio","Centro de mando"],class:["Aula","Anuncios y contexto"],assignments:["Actividades","Tareas, entregas y calificaciones"],materials:["Materiales","Recursos compartidos"],people:["Personas","Integrantes"],attendance:["Asistencia","Control de presencia"],calendar:["Calendario","Eventos del aula"],network:["Red Nexus","Conectividad P2P"],chat:["Chat","Comunicación"],notifications:["Avisos","Notificaciones"],settings:["Configuración","Permisos y experiencia"]};$("topTitle").textContent=t[page][0];$("topSub").textContent=t[page][1];if(current){if(page==="class")loadClass();if(page==="assignments")loadAssignments();if(page==="materials")loadMaterials();if(page==="people")renderPeople();if(page==="attendance")loadAttendance();if(page==="calendar")loadEvents();if(page==="network")renderNetwork();if(page==="notifications")loadNotifications()}}
+async function boot(){await probeBackend();if(!token){return showAuth()}try{user=(await api("/me")).user;if(!user)throw Error();showApp()}catch{localStorage.removeItem("nexusToken");token=null;showAuth()}}
 function showAuth(){$("auth").style.display="grid";$("app").classList.add("hide")}
 function showApp(){$("auth").style.display="none";$("app").classList.remove("hide");$("meName").textContent=user.name;$("meRole").textContent=user.role==="teacher"?"DOCENTE":"ALUMNO";$("newClassBtn").style.display=user.role==="teacher"?"inline-block":"none";$("networkAction").textContent=user.role==="teacher"?"ACTIVAR RED":"CONECTAR CON DOCENTE";connectWS();loadAll()}
 $("switchAuth").onclick=()=>{authMode=authMode==="login"?"register":"login";$("authTitle").textContent=authMode==="login"?"Entrar":"Crear cuenta";$("authBtn").textContent=authMode==="login"?"ENTRAR":"CREAR CUENTA";document.querySelectorAll(".reg").forEach(x=>x.style.display=authMode==="login"?"none":"block")};
 document.querySelectorAll(".reg").forEach(x=>x.style.display="none");
-$("aApi").onchange=()=>{
-  API_BASE=$("aApi").value.trim().replace(/\/+$/,"");
-  if(API_BASE)localStorage.nexusApiBase=API_BASE; else localStorage.removeItem("nexusApiBase");
-};
-$("authBtn").onclick=async()=>{try{const path=authMode==="login"?"/login":"/register",b={name:$("aName").value,email:$("aEmail").value,password:$("aPass").value,role:$("aRole").value},x=await api(path,{method:"POST",body:JSON.stringify(b)});token=x.token;localStorage.nexusToken=token;user=x.user;showApp()}catch(e){toast(e.message)}};
+$("authBtn").onclick=async()=>{try{const path=authMode==="login"?"/login":"/register",b={name:$("aName").value,email:$("aEmail").value,password:$("aPass").value,role:$("aRole").value},x=await api(path,{method:"POST",body:JSON.stringify(b)});token=x.token;localStorage.nexusToken=token;user=x.user;showApp();toast(backendAvailable?"Sesión iniciada.":"Modo local activo: servidor no publicado.")}catch(e){toast(e.message)}};
 $("logout").onclick=()=>{localStorage.removeItem("nexusToken");location.reload()};
 async function loadAll(){await loadClasses();await loadDashboard();if(current)await loadClass()}
 async function loadDashboard(){try{const x=await api("/dashboard");$("stats").innerHTML=`<div class="stat"><b>${x.stats.classes}</b><span>AULAS</span></div><div class="stat"><b>${x.stats.assignments}</b><span>ACTIVIDADES</span></div><div class="stat"><b>${x.stats.pending}</b><span>PENDIENTES</span></div><div class="stat"><b>${x.stats.students}</b><span>ALUMNOS</span></div>`;$("recent").innerHTML=x.recent.length?x.recent.map(r=>`<div class="post"><b>${esc(r.kind==="post"?"Anuncio":"Actividad")}</b><p>${esc(r.text)}</p></div>`).join(""):'<div class="muted">Sin actividad.</div>'}catch(e){toast(e.message)}}
@@ -257,10 +271,10 @@ $("networkAction").onclick=async()=>{
 $("chatSend").onclick=()=>{const t=$("chatInput").value.trim();if(!t||!ws||!current)return;ws.send(JSON.stringify({type:"chat",classId:current.id,text:t}));$("chatInput").value=""};$("chatInput").onkeydown=e=>{if(e.key==="Enter")$("chatSend").click()};
 document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>{if(!current&&b.dataset.page!=="home"){toast("Primero seleccioná o creá un aula.");return}go(b.dataset.page)});
 window.addEventListener("resize",()=>{if(current&&$("network").classList.contains("active"))renderNetwork()});
-if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(()=>{});
+if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js?v=19").catch(()=>{});
 $("demoBtn").onclick=()=>{
   user={id:"demo-teacher",name:$("aName").value.trim()||"Docente Demo",email:"demo@rednexus.local",role:"teacher",createdAt:Date.now()};
-  localStorage.nexusDemo="1";
+  localStorage.nexusDemo="1";localStorage.nexusLocalMode="1";localMode=true;
   $("meName").textContent=user.name;$("meRole").textContent="DOCENTE · DEMO";
   $("auth").style.display="none";$("app").classList.remove("hide");
   current={id:"demo-class",code:"NEXUS7",name:"Aula Demo Red Nexus",subject:"Aula digital",description:"Modo demostración local. El backend permite convertir esta experiencia en un aula multi-dispositivo.",teacherId:user.id,members:[user]};
