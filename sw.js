@@ -1,16 +1,58 @@
-const CACHE="red-nexus-classroom-v19";
-const APP=["/","./index.html","./manifest.webmanifest"];
-self.addEventListener("install",e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(APP)).then(()=>self.skipWaiting())));
-self.addEventListener("activate",e=>e.waitUntil(self.clients.claim()));
-self.addEventListener("fetch",e=>{
-  if(e.request.method!=="GET"||e.request.url.includes("/api/"))return;
-  e.respondWith(caches.match(e.request).then(x=>x||fetch(e.request).then(r=>{const c=r.clone();caches.open(CACHE).then(cache=>cache.put(e.request,c));return r}).catch(()=>caches.match("./index.html"))));
+const CACHE = "red-nexus-classroom-v20";
+
+const APP = [
+  "/",
+  "./index.html",
+  "./manifest.webmanifest",
+  "./nexus-v2.js?v=2"
+];
+
+self.addEventListener("install", event => {
+  event.waitUntil(
+    caches.open(CACHE)
+      .then(cache => cache.addAll(APP))
+      .then(() => self.skipWaiting())
+  );
 });
 
-self.addEventListener("notificationclick",event=>{
-  event.notification.close();
-  event.waitUntil(clients.matchAll({type:"window",includeUncontrolled:true}).then(cs=>{
-    for(const c of cs){if("focus"in c)return c.focus()}
-    if(clients.openWindow)return clients.openWindow("/");
-  }));
+self.addEventListener("activate", event => {
+  event.waitUntil(
+    caches.keys()
+      .then(keys =>
+        Promise.all(
+          keys
+            .filter(key => key !== CACHE)
+            .map(key => caches.delete(key))
+        )
+      )
+      .then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener("fetch", event => {
+  const request = event.request;
+
+  if (request.method !== "GET") return;
+  if (request.url.includes("/api/")) return;
+  if (request.url.includes("/socket") || request.url.includes("/ws")) return;
+
+  event.respondWith(
+    caches.match(request).then(cached => {
+      if (cached) return cached;
+
+      return fetch(request).then(response => {
+        if (!response || response.status !== 200 || response.type === "opaque") {
+          return response;
+        }
+
+        const copy = response.clone();
+        caches.open(CACHE).then(cache => cache.put(request, copy));
+        return response;
+      }).catch(() => caches.match("./index.html"));
+    })
+  );
+});
+
+self.addEventListener("message", event => {
+  if (event.data === "SKIP_WAITING") self.skipWaiting();
 });

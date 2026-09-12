@@ -1,22 +1,23 @@
-RED NEXUS V2 — parche
+RED NEXUS CLASSROOM — V2
+===========================
 
-Archivos:
-- nexus-v2.js: capa adicional de Red Nexus para conexión P2P y transferencia.
-- boot.js: prepara index.html al arrancar Render e inyecta nexus-v2.js.
-- package.json: cambia el inicio a `node boot.js`.
+Archivos corregidos:
+- nexus-v2.js: red P2P + transferencia de archivos.
+- sw.js: caché v20 e invalidación del caché anterior.
+
+Correcciones principales:
+1. La transferencia conserva el objeto File.
+2. Se verifica SHA-256 antes de descargar.
+3. Se manejan candidatos ICE recibidos antes de la descripción remota.
+4. Se soportan mensajes network_ready/ready/auth_ok/authenticated.
+5. Se refresca la lista de miembros cuando entra un nodo.
+6. Se evita crear conexiones WebSocket duplicadas.
+7. Se limpia correctamente la conexión y los peers.
+8. El Service Worker deja de servir la versión v19 antigua.
 
 Instalación:
-1. Copiá los tres archivos a la raíz de NEXUS-X-CLASSROOM.
-2. Reemplazá package.json por el incluido.
-3. No reemplaces index.html ni server.js.
-4. Hacé commit y push a main.
-5. Render volverá a desplegar automáticamente.
-6. Abrí la URL de Render, entrá con dos cuentas del mismo aula.
-7. En Red Nexus pulsá CONECTAR RED V2.
-8. Conectá un nodo y probá ENVIAR ARCHIVO.
-
-Importante:
-- El parche usa el WebSocket/WebRTC que ya existen en el backend.
-- Los bytes del archivo viajan por DataChannel P2P; el servidor sólo hace señalización.
-- Se calcula SHA-256 antes de enviar y se verifica al recibir.
-- Si WebRTC no puede atravesar la red, todavía hará falta TURN para máxima compatibilidad.
+- Colocar nexus-v2.js y sw.js en la raíz del proyecto.
+- El boot.js existente debe cargar /nexus-v2.js?v=2.
+- Hacer commit/push.
+- Esperar el deploy de Render.
+- Cerrar completamente el navegador de prueba y volver a abrir la URL.
