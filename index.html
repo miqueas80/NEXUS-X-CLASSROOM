@@ -352,50 +352,119 @@ function connectWS(){
     ws.onclose=()=>{ws=null;for(const p of peers.values()){try{p.pc.close()}catch{}}peers.clear();renderNetwork()};
   }catch{}
 }
+const pendingCandidates=new Map();
+const activeSends=new Set();
+const P2P_MAGIC=new Uint8Array([0x4e,0x58,0x50,0x31]);
+const P2P_HEADER=20;
+
+function uuidBytes(id){
+  const hex=id.replace(/-/g,"");
+  if(!/^[0-9a-f]{32}$/i.test(hex))throw new Error("transferId inválido");
+  const out=new Uint8Array(16);
+  for(let i=0;i<16;i++)out[i]=parseInt(hex.slice(i*2,i*2+2),16);
+  return out;
+}
+function bytesUuid(bytes){
+  const h=[...bytes].map(x=>x.toString(16).padStart(2,"0")).join("");
+  return h.slice(0,8)+"-"+h.slice(8,12)+"-"+h.slice(12,16)+"-"+h.slice(16,20)+"-"+h.slice(20);
+}
+function makeChunkPacket(tid,buf){
+  const id=uuidBytes(tid),out=new Uint8Array(P2P_HEADER+buf.byteLength);
+  out.set(P2P_MAGIC,0);out.set(id,4);out.set(new Uint8Array(buf),P2P_HEADER);
+  return out;
+}
+function parseChunkPacket(data){
+  const u=new Uint8Array(data);
+  if(u.byteLength<P2P_HEADER)return null;
+  for(let i=0;i<4;i++)if(u[i]!==P2P_MAGIC[i])return null;
+  return {transferId:bytesUuid(u.slice(4,20)),payload:u.buffer.slice(P2P_HEADER)};
+}
+function peerName(id){return current?.members.find(x=>x.id===id)?.name||"dispositivo"}
+
 async function ensurePeer(id){
+  if(!id||id===user?.id)return null;
   if(!ws||ws.readyState!==WebSocket.OPEN)return null;
   if(peers.has(id))return peers.get(id);
   return peer(id,true);
 }
 function peer(id,initiator){
+  if(!id||id===user?.id)return null;
   if(peers.has(id))return peers.get(id);
-  const pc=new RTCPeerConnection({iceServers:[{urls:"stun:stun.l.google.com:19302"}]});
-  const p={pc,dc:null};peers.set(id,p);
-  pc.onicecandidate=e=>e.candidate&&ws?.send(JSON.stringify({type:"signal",to:id,data:{candidate:e.candidate}}));
-  pc.onconnectionstatechange=()=>{if(["failed","closed"].includes(pc.connectionState))peers.delete(id);renderNetwork()};
+  const pc=new RTCPeerConnection({iceServers:[
+    {urls:"stun:stun.l.google.com:19302"},
+    {urls:"stun:stun1.l.google.com:19302"}
+  ]});
+  const p={pc,dc:null,remoteDescription:false};
+  peers.set(id,p);
+  pc.onicecandidate=e=>{
+    if(e.candidate&&ws?.readyState===WebSocket.OPEN)
+      ws.send(JSON.stringify({type:"signal",to:id,data:{candidate:e.candidate}}));
+  };
+  pc.onconnectionstatechange=()=>{
+    if(["failed","closed"].includes(pc.connectionState)){
+      peers.delete(id);
+      pendingCandidates.delete(id);
+    }
+    renderNetwork();
+  };
+  pc.oniceconnectionstatechange=()=>renderNetwork();
   pc.ondatachannel=e=>setupDC(id,e.channel);
   if(initiator){
-    const dc=pc.createDataChannel("nexus-files",{ordered:true});
+    const dc=pc.createDataChannel("nexus-files",{ordered:true,maxRetransmits:null});
     setupDC(id,dc);
-    pc.createOffer().then(o=>pc.setLocalDescription(o)).then(()=>ws?.send(JSON.stringify({type:"signal",to:id,data:{description:pc.localDescription}}))).catch(()=>{});
+    pc.createOffer({offerToReceiveAudio:false,offerToReceiveVideo:false})
+      .then(o=>pc.setLocalDescription(o))
+      .then(()=>ws?.readyState===WebSocket.OPEN&&ws.send(JSON.stringify({
+        type:"signal",to:id,data:{description:pc.localDescription}
+      }))).catch(()=>{});
   }
   return p;
 }
 function setupDC(id,dc){
   const p=peers.get(id);if(!p)return;
-  p.dc=dc;dc.binaryType="arraybuffer";dc.bufferedAmountLowThreshold=1024*1024;
-  dc.onopen=()=>{toast("Canal P2P listo con "+(current?.members.find(x=>x.id===id)?.name||"dispositivo"));renderNetwork()};
-  dc.onclose=()=>renderNetwork();
-  dc.onerror=()=>toast("Error en el canal P2P.");
+  p.dc=dc;
+  dc.binaryType="arraybuffer";
+  dc.bufferedAmountLowThreshold=1024*1024;
+  dc.onopen=()=>{
+    toast("Canal P2P listo con "+peerName(id));
+    renderNetwork();
+  };
+  dc.onclose=()=>{for(const tid of [...activeSends]){const j=transferJobs.get(tid);if(j?.peerId===id&&j.status==="enviando"){j.status="ERROR";j.error="El canal P2P se cerró durante la transferencia.";activeSends.delete(tid);}}renderTransfers();renderNetwork()};
+  dc.onerror=()=>toast("Error en el canal P2P con "+peerName(id)+".");
   dc.onmessage=e=>incoming(id,e.data);
 }
 async function rtcSignal(from,d){
-  const p=peer(from,false),pc=p.pc;
+  const p=peer(from,false);if(!p)return;
+  const pc=p.pc;
   try{
-    if(d.description){
+    if(d?.description){
       await pc.setRemoteDescription(d.description);
+      p.remoteDescription=true;
+      const queued=pendingCandidates.get(from)||[];
+      pendingCandidates.delete(from);
+      for(const c of queued)await pc.addIceCandidate(c);
       if(d.description.type==="offer"){
-        const a=await pc.createAnswer();await pc.setLocalDescription(a);
-        ws?.send(JSON.stringify({type:"signal",to:from,data:{description:pc.localDescription}}));
+        const a=await pc.createAnswer();
+        await pc.setLocalDescription(a);
+        if(ws?.readyState===WebSocket.OPEN)
+          ws.send(JSON.stringify({type:"signal",to:from,data:{description:pc.localDescription}}));
       }
-    }else if(d.candidate)await pc.addIceCandidate(d.candidate);
-  }catch{toast("No se pudo establecer la conexión P2P.")}
+    }else if(d?.candidate){
+      if(p.remoteDescription)await pc.addIceCandidate(d.candidate);
+      else{
+        const q=pendingCandidates.get(from)||[];
+        q.push(d.candidate);pendingCandidates.set(from,q);
+      }
+    }
+  }catch(e){toast("No se pudo establecer la conexión P2P.");}
 }
 async function waitBuffer(dc){
   if(dc.bufferedAmount<4*1024*1024)return;
   await new Promise(resolve=>{
-    const fn=()=>{dc.removeEventListener("bufferedamountlow",fn);resolve()};
-    dc.addEventListener("bufferedamountlow",fn);
+    let done=false;
+    const finish=()=>{if(done)return;done=true;dc.removeEventListener("bufferedamountlow",finish);resolve()};
+    dc.addEventListener("bufferedamountlow",finish);
+    setTimeout(finish,1500);
   });
 }
 function renderTransfers(){
@@ -404,68 +473,104 @@ function renderTransfers(){
   el.innerHTML=jobs.length?jobs.map(j=>{
     const amount=j.direction==="incoming"?j.received:j.sent;
     const pct=j.size?Math.min(100,Math.round(amount/j.size*100)):0;
-    const action=j.direction==="incoming"&&j.status==="esperando aceptación"?`<button class="primary" onclick="Nexus.acceptTransfer('${j.id}')">ACEPTAR</button> <button onclick="Nexus.rejectTransfer('${j.id}')">RECHAZAR</button>`:"";
+    const action=j.direction==="incoming"&&j.status==="esperando aceptación"
+      ?`<button class="primary" onclick="Nexus.acceptTransfer('${j.id}')">ACEPTAR</button> <button onclick="Nexus.rejectTransfer('${j.id}')">RECHAZAR</button>`:"";
     return `<div class="transfer"><div class="transferhead"><div><b>${esc(j.fileName)}</b><small style="display:block">${j.direction==="incoming"?"De ":"Para "}${esc(j.peerName||"dispositivo")} · ${fmt(j.size)}</small></div><span class="tag">${esc(j.status)}</span></div><div class="progress"><div class="bar" style="width:${pct}%"></div></div><small>${pct}% ${j.error?"· "+esc(j.error):""}</small><div style="margin-top:7px">${action}</div></div>`;
   }).join(""):'<div class="muted" style="font-size:11px">No hay transferencias.</div>';
 }
-async function sendFile(peerId,file,meta){
+async function sendFile(peerId,file,meta={}){
+  if(!file||typeof file.slice!=="function"){toast("Archivo no válido.");return false}
   const dc=peers.get(peerId)?.dc;
   if(!dc||dc.readyState!=="open"){toast("El canal P2P no está listo.");return false}
   const tid=crypto.randomUUID();
-  const job={id:tid,direction:"outgoing",fileName:file.name,size:file.size,sent:0,received:0,status:"esperando aceptación",peerName:current?.members.find(x=>x.id===peerId)?.name||"",createdAt:Date.now(),file,meta};
+  const job={id:tid,direction:"outgoing",fileName:file.name||"archivo",size:file.size||0,sent:0,received:0,status:"esperando aceptación",peerName:peerName(peerId),createdAt:Date.now(),file,meta,peerId};
   transferJobs.set(tid,job);renderTransfers();
-  dc.send(JSON.stringify({type:"file-offer",transferId:tid,fileName:file.name,size:file.size,sha256:meta.sha256||"",kind:meta.kind||"file",assignmentId:meta.assignmentId||null,submissionId:meta.submissionId||null}));
-  return true;
+  try{
+    dc.send(JSON.stringify({type:"file-offer",transferId:tid,fileName:job.fileName,size:job.size,sha256:meta.sha256||"",kind:meta.kind||"file",assignmentId:meta.assignmentId||null,submissionId:meta.submissionId||null}));
+    return true;
+  }catch(e){job.status="ERROR";job.error="No se pudo enviar la oferta.";renderTransfers();return false}
 }
 async function startSending(peerId,job){
-  const dc=peers.get(peerId)?.dc;if(!dc||dc.readyState!=="open")return;
-  job.status="enviando";renderTransfers();
-  const chunk=64*1024;let offset=0;
-  while(offset<job.file.size){
-    if(dc.readyState!=="open"){job.status="ERROR";job.error="El canal P2P se cerró durante la transferencia.";renderTransfers();return}
-    await waitBuffer(dc);
-    if(dc.readyState!=="open"){job.status="ERROR";job.error="El canal P2P se cerró durante la transferencia.";renderTransfers();return}
-    const buf=await job.file.slice(offset,Math.min(offset+chunk,job.file.size)).arrayBuffer();
-    dc.send(buf);offset+=buf.byteLength;job.sent=offset;renderTransfers();
-    await new Promise(r=>setTimeout(r,0));
-  }
-  if(dc.readyState!=="open"){job.status="ERROR";job.error="El canal P2P se cerró antes de finalizar.";renderTransfers();return}
-  dc.send(JSON.stringify({type:"file-end",transferId:job.id}));job.status="enviado ✓";renderTransfers();
+  if(activeSends.has(job.id))return;
+  const dc=peers.get(peerId)?.dc;
+  if(!dc||dc.readyState!=="open"){job.status="ERROR";job.error="El canal P2P no está disponible.";renderTransfers();return}
+  activeSends.add(job.id);
+  try{
+    job.status="enviando";renderTransfers();
+    const chunk=64*1024;let offset=0;
+    while(offset<job.size){
+      if(dc.readyState!=="open")throw new Error("El canal P2P se cerró durante la transferencia.");
+      await waitBuffer(dc);
+      if(dc.readyState!=="open")throw new Error("El canal P2P se cerró durante la transferencia.");
+      const buf=await job.file.slice(offset,Math.min(offset+chunk,job.size)).arrayBuffer();
+      dc.send(makeChunkPacket(job.id,buf));
+      offset+=buf.byteLength;job.sent=offset;renderTransfers();
+      await new Promise(r=>setTimeout(r,0));
+    }
+    if(dc.readyState!=="open")throw new Error("El canal P2P se cerró antes de finalizar.");
+    dc.send(JSON.stringify({type:"file-end",transferId:job.id}));
+    job.status="enviado ✓";renderTransfers();
+  }catch(e){job.status="ERROR";job.error=e.message||"Error de transferencia";renderTransfers()}
+  finally{activeSends.delete(job.id)}
 }
-function incoming(peerId,data){
-  let obj=null;if(typeof data==="string"){try{obj=JSON.parse(data)}catch{return}}
+async function incoming(peerId,data){
+  let obj=null;
+  if(typeof data==="string"){try{obj=JSON.parse(data)}catch{return}}
   if(obj?.type==="file-offer"){
-    const job={id:obj.transferId,direction:"incoming",fileName:obj.fileName,size:Number(obj.size||0),received:0,sent:0,status:"esperando aceptación",peerName:current?.members.find(x=>x.id===peerId)?.name||"dispositivo",createdAt:Date.now(),peerId,sha256:obj.sha256,kind:obj.kind,assignmentId:obj.assignmentId,submissionId:obj.submissionId,chunks:[]};
-    transferJobs.set(job.id,job);renderTransfers();toast("Nueva transferencia: "+obj.fileName);notifyUser("Red Nexus · archivo",obj.fileName+" espera aceptación.");return;
+    const size=Math.max(0,Number(obj.size||0));
+    const job={id:obj.transferId,direction:"incoming",fileName:obj.fileName||"archivo",size,received:0,sent:0,status:"esperando aceptación",peerName:peerName(peerId),createdAt:Date.now(),peerId,sha256:obj.sha256||"",kind:obj.kind||"file",assignmentId:obj.assignmentId||null,submissionId:obj.submissionId||null,chunks:[],receivedBytes:0};
+    transferJobs.set(job.id,job);renderTransfers();toast("Nueva transferencia: "+job.fileName);notifyUser("Red Nexus · archivo",job.fileName+" espera aceptación.");return;
   }
-  if(obj?.type==="file-accept"){const j=transferJobs.get(obj.transferId);if(j)startSending(peerId,j);return}
-  if(obj?.type==="file-reject"){const j=transferJobs.get(obj.transferId);if(j){j.status="rechazado";renderTransfers()}return}
+  if(obj?.type==="file-accept"){
+    const j=transferJobs.get(obj.transferId);if(j&&j.direction==="outgoing")startSending(peerId,j);return
+  }
+  if(obj?.type==="file-reject"){
+    const j=transferJobs.get(obj.transferId);if(j){j.status="rechazado";renderTransfers()}return
+  }
   if(obj?.type==="file-end"){finishIncoming(obj.transferId);return}
-  const j=[...transferJobs.values()].find(x=>x.direction==="incoming"&&x.peerId===peerId&&x.status==="recibiendo");
-  if(j&&data instanceof ArrayBuffer){j.chunks.push(data);j.received+=data.byteLength;renderTransfers()}
+  let raw=null;
+  if(data instanceof ArrayBuffer)raw=data;
+  else if(typeof Blob!=="undefined"&&data instanceof Blob)raw=await data.arrayBuffer();
+  if(!raw)return;
+  const packet=parseChunkPacket(raw);if(!packet)return;
+  const j=transferJobs.get(packet.transferId);
+  if(j&&j.direction==="incoming"&&j.peerId===peerId&&j.status==="recibiendo"){
+    j.chunks.push(packet.payload);
+    j.received+=packet.payload.byteLength;
+    if(j.received>j.size){j.status="ERROR";j.error="La transferencia excede el tamaño anunciado.";j.chunks=[]}
+    renderTransfers();
+  }
 }
 window.Nexus.acceptTransfer=async tid=>{
-  const j=transferJobs.get(tid);if(!j)return;
+  const j=transferJobs.get(tid);if(!j||j.direction!=="incoming")return;
   const dc=peers.get(j.peerId)?.dc;
   if(!dc||dc.readyState!=="open"){toast("El dispositivo no está conectado.");return}
-  j.status="recibiendo";renderTransfers();dc.send(JSON.stringify({type:"file-accept",transferId:tid}));
+  j.status="recibiendo";j.received=0;j.chunks=[];renderTransfers();
+  try{dc.send(JSON.stringify({type:"file-accept",transferId:tid}))}
+  catch{j.status="ERROR";j.error="No se pudo aceptar la transferencia.";renderTransfers()}
 };
 window.Nexus.rejectTransfer=tid=>{
   const j=transferJobs.get(tid),dc=j&&peers.get(j.peerId)?.dc;
-  if(!j||!dc)return;j.status="rechazado";dc.send(JSON.stringify({type:"file-reject",transferId:tid}));renderTransfers();
+  if(!j||!dc)return;
+  try{dc.send(JSON.stringify({type:"file-reject",transferId:tid}))}catch{}
+  j.status="rechazado";renderTransfers();
 };
 async function finishIncoming(tid){
-  const j=transferJobs.get(tid);if(!j)return;
+  const j=transferJobs.get(tid);if(!j||j.direction!=="incoming")return;
   try{
+    if(j.status!=="recibiendo")return;
+    if(j.received!==j.size)throw new Error(`Tamaño incompleto: ${j.received} de ${j.size} bytes`);
     const blob=new Blob(j.chunks,{type:"application/octet-stream"});
     const h=await digest(blob);
     if(j.sha256&&h!==j.sha256){j.status="ERROR HASH";j.error="Integridad no verificada";renderTransfers();return}
-    const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=j.fileName;a.click();
+    const url=URL.createObjectURL(blob),a=document.createElement("a");
+    a.href=url;a.download=j.fileName;document.body.appendChild(a);a.click();a.remove();
     setTimeout(()=>URL.revokeObjectURL(url),30000);
     j.status="recibido ✓";j.received=blob.size;j.chunks=[];renderTransfers();toast("Archivo recibido y verificado.");
-  }catch(e){j.status="ERROR";j.error=e.message;renderTransfers()}
+  }catch(e){j.status="ERROR";j.error=e.message||"Error al reconstruir el archivo";renderTransfers()}
 }
 async function digest(file){const b=await file.arrayBuffer(),h=await crypto.subtle.digest("SHA-256",b);return [...new Uint8Array(h)].map(x=>x.toString(16).padStart(2,"0")).join("")}
+
 function localDate(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
 function fmt(n){if(!n)return"0 B";const u=["KB","MB","GB"];let i=-1;do{n/=1024;i++}while(n>=1024&&i<u.length-1);return n.toFixed(n<10?2:1)+" "+u[i]}
 function addChat(m){if(!current||m.classId!==current.id)return;$("chatLog").innerHTML+=`<div class="msg"><b>${esc(m.user?.name)}</b><span>${esc(m.text)}</span></div>`;$("chatLog").scrollTop=$("chatLog").scrollHeight}
