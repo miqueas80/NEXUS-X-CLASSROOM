@@ -5,7 +5,7 @@
   "description": "Aula digital independiente con Red Nexus P2P",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node boot.js"
   },
   "dependencies": {
     "ws": "^8.18.0"

@@ -1,0 +1,22 @@
+RED NEXUS V2 — parche
+
+Archivos:
+- nexus-v2.js: capa adicional de Red Nexus para conexión P2P y transferencia.
+- boot.js: prepara index.html al arrancar Render e inyecta nexus-v2.js.
+- package.json: cambia el inicio a `node boot.js`.
+
+Instalación:
+1. Copiá los tres archivos a la raíz de NEXUS-X-CLASSROOM.
+2. Reemplazá package.json por el incluido.
+3. No reemplaces index.html ni server.js.
+4. Hacé commit y push a main.
+5. Render volverá a desplegar automáticamente.
+6. Abrí la URL de Render, entrá con dos cuentas del mismo aula.
+7. En Red Nexus pulsá CONECTAR RED V2.
+8. Conectá un nodo y probá ENVIAR ARCHIVO.
+
+Importante:
+- El parche usa el WebSocket/WebRTC que ya existen en el backend.
+- Los bytes del archivo viajan por DataChannel P2P; el servidor sólo hace señalización.
+- Se calcula SHA-256 antes de enviar y se verifica al recibir.
+- Si WebRTC no puede atravesar la red, todavía hará falta TURN para máxima compatibilidad.
