@@ -11,3 +11,7 @@ Queda prohibido copiar, modificar, distribuir, publicar, reutilizar, vender o in
 La publicación de este repositorio en GitHub no concede ningún derecho de uso, copia, modificación, distribución o comercialización sobre el código.
 
 Cualquier uso no autorizado constituye una infracción de los derechos reservados por el propietario.
+
+Repositorio oficial:
+
+https://github.com/miqueas80/NEXUS-X-CLASSROOM
