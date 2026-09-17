@@ -1,3 +1,13 @@
-Copyright (c) 2026 miqueas80 (NEXUS-X-CLASSROOM)
-Todos los derechos reservados.
-Queda estrictamente prohibida la reproducción, distribución, modificación, comunicación pública, comercialización o utilización total o parcial de este código fuente, documentación y archivos adjuntos, por cualquier medio o procedimiento, sin la autorización previa y por escrito del titular de los derechos de autor.
+NEXUS-X-CLASSROOM — LICENCIA PROPIETARIA
+
+Copyright © 2026 Miqueas (miqueas80). Todos los derechos reservados.
+
+El código fuente de NEXUS-X-CLASSROOM es propiedad exclusiva de Miqueas (miqueas80).
+
+Queda prohibido copiar, modificar, distribuir, publicar, reutilizar, vender o incorporar este código, total o parcialmente, en cualquier otro proyecto sin autorización expresa del propietario.
+
+Únicamente Miqueas (miqueas80), o las personas a quienes él autorice expresamente, podrán utilizar este código.
+
+La publicación de este repositorio en GitHub no concede ningún derecho de uso, copia, modificación, distribución o comercialización sobre el código.
+
+Cualquier uso no autorizado constituye una infracción de los derechos reservados por el propietario.
