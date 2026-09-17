@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import * as F from './nexus-fabric-90.mjs';
+const data=new TextEncoder().encode('NEXUS distributed classroom file fabric '.repeat(2000));
+const manifest=F.manifestFor(data,{name:'clase.txt',mime:'text/plain',chunkSize:1024});
+assert.equal(F.validateManifest(manifest).ok,true);
+assert.equal(manifest.fileHash,F.sha256(data));
+const source=new Map();const chunks=F.chunkBytes(data,1024);chunks.forEach(c=>F.putChunk(source,c));
+assert.equal(source.size,new Set(chunks.map(F.sha256)).size);
+const partial=new Map();for(const [i,c] of chunks.entries())if(i%3!==0)F.putChunk(partial,c);
+const missing=F.missingChunks(manifest,[...partial.keys()]);assert.ok(missing.length>0);
+const plan=F.planTransfer(manifest,partial);assert.equal(plan.length,missing.length);
+for(const i of missing)F.applyChunk(partial,chunks[i],manifest.chunks[i].hash);
+const result=F.assemble(manifest,partial);assert.equal(result.ok,true);assert.deepEqual([...result.data],[...data]);
+const bad=new Map(partial);bad.set(manifest.chunks[0].hash,new Uint8Array([1,2,3]));assert.equal(F.assemble(manifest,bad).ok,false);
+console.log('FABRIC 90 TESTS: PASS');

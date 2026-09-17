@@ -7,7 +7,7 @@
   <meta name="description" content="Red Nexus Classroom: aula digital independiente.">
   <link rel="manifest" href="/manifest.webmanifest">
   <title>RED NEXUS CLASSROOM</title>
-  <meta name="application-version" content="21.0-integrado">
+  <meta name="application-version" content="31.0-master">
   <style>
 :root{--bg:#070b13;--side:#0a111d;--panel:#101a2b;--panel2:#0c1524;--line:#263753;--text:#edf4ff;--muted:#8fa1bd;--a:#67e8f9;--ok:#58e38b;--warn:#ffd166;--bad:#ff7180}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 30% -10%,#182a47 0,#070b13 46%);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif}button,input,textarea,select{font:inherit}button{border:1px solid var(--line);background:#16243b;color:var(--text);padding:10px 13px;border-radius:10px;cursor:pointer}button:hover:not(:disabled){filter:brightness(1.12)}button:disabled{opacity:.45;cursor:not-allowed}.primary{background:#126d88;border-color:#3bd0ec}.danger{background:#29151b;border-color:#66333e}.ghost{background:transparent}.row{display:flex;gap:8px}.row>*{flex:1}
@@ -588,7 +588,7 @@ $("networkAction").onclick=async()=>{
 $("chatSend").onclick=()=>{const t=$("chatInput").value.trim();if(!t||!ws||!current)return;ws.send(JSON.stringify({type:"chat",classId:current.id,text:t}));$("chatInput").value=""};$("chatInput").onkeydown=e=>{if(e.key==="Enter")$("chatSend").click()};
 document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>{if(!current&&b.dataset.page!=="home"){toast("Primero seleccioná o creá un aula.");return}go(b.dataset.page)});
 window.addEventListener("resize",()=>{if(current&&$("network").classList.contains("active"))renderNetwork()});
-if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js?v=21").catch(()=>{});
+if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js?v=31").catch(()=>{});
 $("demoBtn").onclick=()=>{
   user={id:"demo-teacher",name:$("aName").value.trim()||"Docente Demo",email:"demo@rednexus.local",role:"teacher",createdAt:Date.now()};
   localStorage.nexusDemo="1";localStorage.nexusLocalMode="1";localMode=true;
@@ -664,5 +664,6 @@ updatePermissions();
 boot();
 })();
 </script>
- </body>
+ <script src="nexus-master.js?v=31"></script>
+</body>
 </html>

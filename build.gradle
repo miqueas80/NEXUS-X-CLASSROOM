@@ -1,0 +1,7 @@
+plugins { id 'com.android.application' }
+
+android { namespace 'com.nexus.classroom'; compileSdk 36
+    defaultConfig { applicationId 'com.nexus.classroom'; minSdk 26; targetSdk 36; versionCode 31; versionName '31.0' }
+}
+
+dependencies { implementation 'com.google.android.gms:play-services-nearby:19.5.0' }

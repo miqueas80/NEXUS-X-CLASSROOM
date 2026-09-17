@@ -1,0 +1,15 @@
+import { webcrypto } from 'node:crypto';
+const enc=new TextEncoder();
+const b64u=b=>Buffer.from(b).toString('base64url');
+const sha=async x=>b64u(await crypto.subtle.digest('SHA-256',enc.encode(JSON.stringify(x))));
+const canonical=e=>{const {signature,publicKey,hash,...rest}=e;return rest};
+const kp=await crypto.subtle.generateKey({name:'ECDSA',namedCurve:'P-256'},false,['sign','verify']);
+const pub=await crypto.subtle.exportKey('jwk',kp.publicKey);
+const e={id:'evt-1',nodeId:'node-a',kind:'assignment.updated',payload:{title:'Prueba'},hlc:'100:000001',deps:{}};
+e.hash=await sha(canonical(e));e.signature=b64u(await crypto.subtle.sign({name:'ECDSA',hash:'SHA-256'},kp.privateKey,enc.encode(JSON.stringify(canonical(e)))));
+const pub2=await crypto.subtle.importKey('jwk',pub,{name:'ECDSA',namedCurve:'P-256'},false,['verify']);
+const ok=await crypto.subtle.verify({name:'ECDSA',hash:'SHA-256'},pub2,Buffer.from(e.signature,'base64url'),enc.encode(JSON.stringify(canonical(e))));
+const tampered={...e,payload:{title:'Ataque'}};
+const badHash=(await sha(canonical(tampered)))!==e.hash;
+console.log(JSON.stringify({signatureValid:ok,tamperDetected:badHash,hash:e.hash},null,2));
+if(!ok||!badHash)process.exit(1);
